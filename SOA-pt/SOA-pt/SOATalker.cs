@@ -57,8 +57,8 @@ namespace SOA_pt
                 
                 Stream stm = tcpclnt.GetStream();
 
-                ASCIIEncoding asen = new ASCIIEncoding();
-                byte[] ba = asen.GetBytes(allWords); // Sending it all to bytes so I can send that shit 
+                ASCIIEncoding asen = new ASCIIEncoding(); 
+                byte[] ba = asen.GetBytes(allWords); // Sending it all to bytes so I can send that shit adsf
 
                 stm.Write(ba, 0, ba.Length);
 

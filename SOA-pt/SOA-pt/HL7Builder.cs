@@ -423,6 +423,7 @@ namespace SOA_pt
         }
     }
 
+    //builder 
     class HL7Builder
     {
 

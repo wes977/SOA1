@@ -101,7 +101,7 @@ namespace SOA_pt
             MCHtemp.port = "50002";
             tempWords[9] = tempHL.MCHBuilder(MCHtemp);
 
-            // Sending it 
+            // Sending it  asdf
             temp.SOAtalking(tempWords);
 
             Console.ReadLine();
