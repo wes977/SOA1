@@ -35,7 +35,7 @@ namespace SOA_pt
             tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.REG);
             tempWords[1] = tempHL.INFBuilder(INFtemp);
             temp.SOAtalking(tempWords);
-
+   
 
             // Publishing the service 
 
@@ -54,23 +54,54 @@ namespace SOA_pt
             tempWords[1] = tempHL.SRVBuilder(SRVtemp);
             // ARGS
             ARGtemp.argPosition = "1";
-            ARGtemp.argName = "";
-            ARGtemp.argDataType = "";
-            ARGtemp.argManOpt = "";
+            ARGtemp.argName = "province";
+            ARGtemp.argDataType = "string";
+            ARGtemp.argManOpt = "mandatory";
             tempWords[2] = tempHL.ARGBuilder(ARGtemp);
 
             ARGtemp.argPosition = "2";
-            ARGtemp.argName = "";
-            ARGtemp.argDataType = "";
-            ARGtemp.argManOpt = "";
+            ARGtemp.argName = "value";
+            ARGtemp.argDataType = "double";
+            ARGtemp.argManOpt = "mandatory";
             tempWords[3] = tempHL.ARGBuilder(ARGtemp);
 
             // RSP
+            RSPtemp.position = "1";
+            RSPtemp.name = "subTotal";
+            RSPtemp.DataType = "double";
+            RSPtemp.value = "";
+            tempWords[4] = tempHL.RSPBuilder(RSPtemp);
 
+            RSPtemp.position = "2";
+            RSPtemp.name = "PST";
+            RSPtemp.DataType = "double";
+            RSPtemp.value = "";
+            tempWords[5] = tempHL.RSPBuilder(RSPtemp);
+
+            RSPtemp.position = "3";
+            RSPtemp.name = "HST";
+            RSPtemp.DataType = "double";
+            RSPtemp.value = "";
+            tempWords[6] = tempHL.RSPBuilder(RSPtemp);
+
+            RSPtemp.position = "4";
+            RSPtemp.name = "GST";
+            RSPtemp.DataType = "double";
+            RSPtemp.value = "";
+            tempWords[7] = tempHL.RSPBuilder(RSPtemp);
+
+            RSPtemp.position = "5";
+            RSPtemp.name = "Total";
+            RSPtemp.DataType = "double";
+            RSPtemp.value = "";
+            tempWords[8] = tempHL.RSPBuilder(RSPtemp);
 
             // MCH
+            MCHtemp.IP = "10.113.21.147";
+            MCHtemp.port = "50002";
+            tempWords[9] = tempHL.MCHBuilder(MCHtemp);
 
-            tempWords[1] = tempHL.INFBuilder(INFtemp);
+            // Sending it 
             temp.SOAtalking(tempWords);
 
             Console.ReadLine();

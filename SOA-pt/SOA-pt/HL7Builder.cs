@@ -428,7 +428,7 @@ namespace SOA_pt
 
         char separatingChar = '|';
         private string[] aCommandTypes = { "DRC", "INF", "SOA", "SRV", "ARG", "MCH", "RSP", "PUB" };
-        private string[] aRegistryCommands = { "REG-TEAM", "UNREG-TEAM", "QUERY-TEAM", "PUB_SERVICE", "QUERY-SERVICE", "EXEC-SERVICE" };
+        private string[] aRegistryCommands = { "REG-TEAM", "UNREG-TEAM", "QUERY-TEAM", "PUB-SERVICE", "QUERY-SERVICE", "EXEC-SERVICE" };
         private string message;
         private int BOMunicode = 11;
         private int EOSunicode = 13;
@@ -595,13 +595,13 @@ namespace SOA_pt
         public string SRVBuilder(SRVstruct builder)
         {
             string cmd = "";
-            cmd = string.Format("SRV|{0}|{1}|{2}|{3}|{4}|{5}|{6}|", builder.teamName, builder.serviceName, builder.securityLevel, builder.numARGS, builder.numResponses, builder.description);
+            cmd = string.Format("SRV|{0}|{1}|{2}|{3}|{4}|{5}|", builder.teamName, builder.serviceName, builder.securityLevel, builder.numARGS, builder.numResponses, builder.description);
             return cmd;
         }
         public string ARGBuilder(ARGstruct builder)
         {
             string cmd = "";
-            cmd = string.Format("ARG|{0}|{1}|{2}|{3}|{4}|{5}|", builder.argPosition, builder.argName, builder.argDataType, builder.argManOpt, builder.value);
+            cmd = string.Format("ARG|{0}|{1}|{2}|{3}|{4}|", builder.argPosition, builder.argName, builder.argDataType, builder.argManOpt, builder.value);
             return cmd;
         }
         public string MCHBuilder(MCHstruct builder)
@@ -613,7 +613,7 @@ namespace SOA_pt
         public string RSPBuilder(RSPstruct builder)
         {
             string cmd = "";
-            cmd = string.Format("RSP|{0}|{1}|{2}|", builder.position, builder.name, builder.DataType, builder.value);
+            cmd = string.Format("RSP|{0}|{1}|{2}|{3}|", builder.position, builder.name, builder.DataType, builder.value);
             return cmd;
         }
         public string PUBBuilder(PUBstruct builder)

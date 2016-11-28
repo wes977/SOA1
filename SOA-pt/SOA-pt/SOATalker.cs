@@ -39,8 +39,6 @@ namespace SOA_pt
             {
 
                 TcpClient tcpclnt = new TcpClient();
-                Console.WriteLine("Connecting.....");
-
                 tcpclnt.Connect(_IP, _Port);
 
                 allWords += BOM;
