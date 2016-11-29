@@ -16,7 +16,7 @@ namespace SOA1_C
         public Form1()
         {
             InitializeComponent();
-            
+
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -26,7 +26,7 @@ namespace SOA1_C
 
         private void srvc1btn_Click(object sender, EventArgs e)
         {
-            (new Form2()).Show();
+            (new SNbtn()).Show();
             this.Hide();
         }
     }

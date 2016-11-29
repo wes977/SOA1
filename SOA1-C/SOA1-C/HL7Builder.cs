@@ -559,12 +559,12 @@ namespace SOA1_C
         }
         private void SRVcommand(string[] inputValues)
         {
-
-            SRVs.serviceName = inputValues[1];
-            SRVs.securityLevel = inputValues[2];
-            SRVs.numARGS = inputValues[3];
-            SRVs.numResponses = inputValues[4];
-            SRVs.description = inputValues[5];
+            SRVs.teamName = inputValues[1];
+            SRVs.serviceName = inputValues[2];
+            SRVs.securityLevel = inputValues[3];
+            SRVs.numARGS = inputValues[4];
+            SRVs.numResponses = inputValues[5];
+            SRVs.description = inputValues[6];
         }
         private void ARGcommand(string[] inputValues)
         {

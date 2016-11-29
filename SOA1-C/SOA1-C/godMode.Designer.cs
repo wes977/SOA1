@@ -1,6 +1,6 @@
 ﻿namespace SOA1_C
 {
-    partial class SOA1
+    partial class SNbtn
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SOA1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SNbtn));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,14 +40,13 @@
             this.serviceNameTB = new System.Windows.Forms.TextBox();
             this.teamNameTB = new System.Windows.Forms.TextBox();
             this.portTB = new System.Windows.Forms.TextBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.westNetLogo = new System.Windows.Forms.PictureBox();
             this.regTeambtn = new System.Windows.Forms.Button();
             this.querybtn = new System.Windows.Forms.Button();
             this.execbtl = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.westNetLogo)).BeginInit();
+            this.label7 = new System.Windows.Forms.Label();
+            this.srvDescLBl = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -94,7 +93,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(200, 129);
+            this.label5.Location = new System.Drawing.Point(204, 167);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(84, 33);
             this.label5.TabIndex = 4;
@@ -105,7 +104,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(840, 129);
+            this.label6.Location = new System.Drawing.Point(844, 167);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(108, 33);
             this.label6.TabIndex = 5;
@@ -147,36 +146,11 @@
             this.portTB.TabIndex = 9;
             this.portTB.Text = "3128";
             // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(12, 167);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(584, 524);
-            this.listBox1.TabIndex = 10;
-            // 
-            // listBox2
-            // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(602, 167);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(584, 524);
-            this.listBox2.TabIndex = 11;
-            // 
             // imageList1
             // 
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // westNetLogo
-            // 
-            this.westNetLogo.ImageLocation = "C:\\Users\\wthompson2143\\Desktop\\SOA1-C (2)\\SOA1-C\\SOA1-C\\SOA1-C\\WestNet.PNG";
-            this.westNetLogo.Location = new System.Drawing.Point(1040, 9);
-            this.westNetLogo.Name = "westNetLogo";
-            this.westNetLogo.Size = new System.Drawing.Size(146, 113);
-            this.westNetLogo.TabIndex = 12;
-            this.westNetLogo.TabStop = false;
             // 
             // regTeambtn
             // 
@@ -187,6 +161,7 @@
             this.regTeambtn.TabIndex = 13;
             this.regTeambtn.Text = "Register Team";
             this.regTeambtn.UseVisualStyleBackColor = true;
+            this.regTeambtn.Click += new System.EventHandler(this.regTeambtn_Click);
             // 
             // querybtn
             // 
@@ -207,19 +182,51 @@
             this.execbtl.TabIndex = 15;
             this.execbtl.Text = "Execute";
             this.execbtl.UseVisualStyleBackColor = true;
+            this.execbtl.Click += new System.EventHandler(this.execbtl_Click);
             // 
-            // SOA1
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(12, 134);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(182, 33);
+            this.label7.TabIndex = 16;
+            this.label7.Text = "Description:";
+            // 
+            // srvDescLBl
+            // 
+            this.srvDescLBl.AutoSize = true;
+            this.srvDescLBl.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.srvDescLBl.Location = new System.Drawing.Point(233, 134);
+            this.srvDescLBl.Name = "srvDescLBl";
+            this.srvDescLBl.Size = new System.Drawing.Size(24, 33);
+            this.srvDescLBl.TabIndex = 17;
+            this.srvDescLBl.Text = " ";
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(523, 5);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(253, 40);
+            this.button2.TabIndex = 19;
+            this.button2.Text = "Set Network";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // SNbtn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.ClientSize = new System.Drawing.Size(1198, 747);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.srvDescLBl);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.execbtl);
             this.Controls.Add(this.querybtn);
             this.Controls.Add(this.regTeambtn);
-            this.Controls.Add(this.westNetLogo);
-            this.Controls.Add(this.listBox2);
-            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.portTB);
             this.Controls.Add(this.teamNameTB);
             this.Controls.Add(this.serviceNameTB);
@@ -231,9 +238,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "SOA1";
+            this.Name = "SNbtn";
             this.Text = "godMode";
-            ((System.ComponentModel.ISupportInitialize)(this.westNetLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -251,12 +257,12 @@
         private System.Windows.Forms.TextBox serviceNameTB;
         private System.Windows.Forms.TextBox teamNameTB;
         private System.Windows.Forms.TextBox portTB;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.PictureBox westNetLogo;
         private System.Windows.Forms.Button regTeambtn;
         private System.Windows.Forms.Button querybtn;
         private System.Windows.Forms.Button execbtl;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label srvDescLBl;
+        private System.Windows.Forms.Button button2;
     }
 }

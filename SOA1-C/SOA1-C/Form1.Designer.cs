@@ -30,9 +30,10 @@
         {
             this.form1Ttl = new System.Windows.Forms.Label();
             this.srvc1btn = new System.Windows.Forms.Button();
-            this.srvc2btn = new System.Windows.Forms.Button();
-            this.srvc3btn = new System.Windows.Forms.Button();
-            this.srvc4btn = new System.Windows.Forms.Button();
+            this.IPlbl = new System.Windows.Forms.Label();
+            this.portlbl = new System.Windows.Forms.Label();
+            this.iptb = new System.Windows.Forms.TextBox();
+            this.porttb = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // form1Ttl
@@ -47,7 +48,7 @@
             // 
             // srvc1btn
             // 
-            this.srvc1btn.Location = new System.Drawing.Point(13, 68);
+            this.srvc1btn.Location = new System.Drawing.Point(9, 116);
             this.srvc1btn.Name = "srvc1btn";
             this.srvc1btn.Size = new System.Drawing.Size(315, 23);
             this.srvc1btn.TabIndex = 1;
@@ -55,44 +56,50 @@
             this.srvc1btn.UseVisualStyleBackColor = true;
             this.srvc1btn.Click += new System.EventHandler(this.srvc1btn_Click);
             // 
-            // srvc2btn
+            // IPlbl
             // 
-            this.srvc2btn.Location = new System.Drawing.Point(13, 97);
-            this.srvc2btn.Name = "srvc2btn";
-            this.srvc2btn.Size = new System.Drawing.Size(315, 23);
-            this.srvc2btn.TabIndex = 2;
-            this.srvc2btn.Text = "Service 2";
-            this.srvc2btn.UseVisualStyleBackColor = true;
+            this.IPlbl.AutoSize = true;
+            this.IPlbl.Location = new System.Drawing.Point(12, 64);
+            this.IPlbl.Name = "IPlbl";
+            this.IPlbl.Size = new System.Drawing.Size(58, 13);
+            this.IPlbl.TabIndex = 2;
+            this.IPlbl.Text = "IP Address";
             // 
-            // srvc3btn
+            // portlbl
             // 
-            this.srvc3btn.Location = new System.Drawing.Point(13, 126);
-            this.srvc3btn.Name = "srvc3btn";
-            this.srvc3btn.Size = new System.Drawing.Size(315, 23);
-            this.srvc3btn.TabIndex = 3;
-            this.srvc3btn.Text = "Service 3";
-            this.srvc3btn.UseVisualStyleBackColor = true;
+            this.portlbl.AutoSize = true;
+            this.portlbl.Location = new System.Drawing.Point(12, 93);
+            this.portlbl.Name = "portlbl";
+            this.portlbl.Size = new System.Drawing.Size(29, 13);
+            this.portlbl.TabIndex = 3;
+            this.portlbl.Text = "Port:";
             // 
-            // srvc4btn
+            // iptb
             // 
-            this.srvc4btn.Location = new System.Drawing.Point(13, 155);
-            this.srvc4btn.Name = "srvc4btn";
-            this.srvc4btn.Size = new System.Drawing.Size(315, 23);
-            this.srvc4btn.TabIndex = 4;
-            this.srvc4btn.Text = "Service 4";
-            this.srvc4btn.UseVisualStyleBackColor = true;
+            this.iptb.Location = new System.Drawing.Point(77, 64);
+            this.iptb.Name = "iptb";
+            this.iptb.Size = new System.Drawing.Size(247, 20);
+            this.iptb.TabIndex = 4;
             // 
-            // Form2
+            // porttb
+            // 
+            this.porttb.Location = new System.Drawing.Point(77, 90);
+            this.porttb.Name = "porttb";
+            this.porttb.Size = new System.Drawing.Size(247, 20);
+            this.porttb.TabIndex = 5;
+            // 
+            // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(340, 189);
-            this.Controls.Add(this.srvc4btn);
-            this.Controls.Add(this.srvc3btn);
-            this.Controls.Add(this.srvc2btn);
+            this.ClientSize = new System.Drawing.Size(340, 154);
+            this.Controls.Add(this.porttb);
+            this.Controls.Add(this.iptb);
+            this.Controls.Add(this.portlbl);
+            this.Controls.Add(this.IPlbl);
             this.Controls.Add(this.srvc1btn);
             this.Controls.Add(this.form1Ttl);
-            this.Name = "Form2";
+            this.Name = "Form1";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Form2_Load);
             this.ResumeLayout(false);
@@ -104,8 +111,9 @@
 
         private System.Windows.Forms.Label form1Ttl;
         private System.Windows.Forms.Button srvc1btn;
-        private System.Windows.Forms.Button srvc2btn;
-        private System.Windows.Forms.Button srvc3btn;
-        private System.Windows.Forms.Button srvc4btn;
+        private System.Windows.Forms.Label IPlbl;
+        private System.Windows.Forms.Label portlbl;
+        private System.Windows.Forms.TextBox iptb;
+        private System.Windows.Forms.TextBox porttb;
     }
 }
