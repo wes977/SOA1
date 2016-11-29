@@ -112,6 +112,126 @@ namespace SOA_pt
             return returner;
         }
 
+
+        public bool regTeam()
+        {
+            DRCstruct DRCtemp = new DRCstruct();
+            INFstruct INFtemp = new INFstruct();
+            HL7Builder tempHL = new HL7Builder();
+
+            string[] tempWords =
+            {
+                "","","","","","","","","",""
+            };
+
+
+            // Registerig the team fromt he service and all that 
+            INFtemp.teamName = "WestNet";
+            tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.REG);
+            tempWords[1] = tempHL.INFBuilder(INFtemp);
+            SOAtalking(tempWords);
+            return true;
+        }
+        public bool unregTeam()
+        {
+            DRCstruct DRCtemp = new DRCstruct();
+            HL7Builder tempHL = new HL7Builder();
+
+            string[] tempWords =
+            {
+                ""
+            };
+
+
+            // Registerig the team fromt he service and all that 
+            DRCtemp.teamName = "WestNet";
+            DRCtemp.teamID = "1186";
+            tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.UNREG);
+
+            SOAtalking(tempWords);
+            return true;
+        }
+        public bool queryTeam(string teamName , string teamID,string serviceTag)
+        {
+            DRCstruct DRCtemp = new DRCstruct();
+            INFstruct INFtemp = new INFstruct();
+            HL7Builder tempHL = new HL7Builder();
+
+            string[] tempWords =
+            {
+                "","","","","","","","","",""
+            };
+
+
+            // Registerig the team fromt he service and all that 
+            DRCtemp.teamName = "WestNet";
+            DRCtemp.teamID = "1186";
+            INFtemp.teamName = teamName;
+            INFtemp.teamID = teamID;
+            INFtemp.serviceTag = serviceTag;
+            tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.QUERY);
+            tempWords[1] = tempHL.INFBuilder(INFtemp);
+            SOAtalking(tempWords);
+            return true;
+        }
+        public bool queryService(string serviceTag)
+        {
+            DRCstruct DRCtemp = new DRCstruct();
+            SRVstruct SRVtemp = new SRVstruct();
+            HL7Builder tempHL = new HL7Builder();
+
+            string[] tempWords =
+            {
+                "","","","","","","","","",""
+            };
+
+
+            // Registerig the team fromt he service and all that 
+            DRCtemp.teamName = "WestNet";
+            DRCtemp.teamID = "1186";
+
+            SRVtemp.teamName = serviceTag;
+
+
+            tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.QUERY);
+            tempWords[1] = tempHL.SRVBuilder(SRVtemp);
+            SOAtalking(tempWords);
+            return true;
+
+        }
+
+        public bool execService(string serviceName , string numArgs , ARGstruct[] args)
+        {
+            DRCstruct DRCtemp = new DRCstruct();
+            SRVstruct SRVtemp = new SRVstruct();
+            ARGstruct ARGtemp = new ARGstruct();
+            HL7Builder tempHL = new HL7Builder();
+
+            string[] tempWords =
+            {
+                "","","","","","","","","",""
+            };
+
+
+            // Registerig the team fromt he service and all that 
+            DRCtemp.teamName = "WestNet";
+            DRCtemp.teamID = "1186";
+
+            SRVtemp.serviceName = serviceName;
+            SRVtemp.numARGS = numArgs;
+            tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.QUERY);
+            tempWords[1] = tempHL.SRVBuilder(SRVtemp);
+            int counter = 0;
+            foreach (ARGstruct a in args)
+            {
+                tempWords[counter] = tempHL.ARGBuilder(a);
+                counter++;
+            }
+
+
+            SOAtalking(tempWords);
+            return true;
+        }
         public bool publishService()
         {
             bool returner = false;
@@ -122,13 +242,12 @@ namespace SOA_pt
 
 
             HL7Builder tempHL = new HL7Builder();
-            SOATalker temp = new SOATalker();
             DRCstruct DRCtemp = new DRCstruct();
             SRVstruct SRVtemp = new SRVstruct();
             ARGstruct ARGtemp = new ARGstruct();
             MCHstruct MCHtemp = new MCHstruct();
             RSPstruct RSPtemp = new RSPstruct();
-            PUBstruct PUBtemp = new PUBstruct();
+
 
             //publiching the thing and all that
             DRCtemp.teamName = "WestNet";
@@ -193,8 +312,10 @@ namespace SOA_pt
             tempWords[9] = tempHL.MCHBuilder(MCHtemp);
 
             // Sending it  asdf
-            return temp.SOAtalking(tempWords);
+            return SOAtalking(tempWords);
         }
+
+
 
     }
 }
