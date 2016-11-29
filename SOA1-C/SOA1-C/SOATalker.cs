@@ -200,7 +200,7 @@ namespace SOA1_C
 
         }
 
-        public bool execService(string serviceName , string numArgs , ARGstruct[] args)
+        public bool execService(string serviceName , string numArgs , List<ARGstruct> args)
         {
             DRCstruct DRCtemp = new DRCstruct();
             SRVstruct SRVtemp = new SRVstruct();

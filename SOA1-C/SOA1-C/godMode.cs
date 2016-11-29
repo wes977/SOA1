@@ -35,7 +35,8 @@ namespace SOA1_C
             int i = 0;
             int j = 0;
             srvDescLBl.Text = talker.tempHL.SRVs.description;
-
+            servicetalker.IP = talker.tempHL.MCHs.IP;
+            servicetalker.port = Convert.ToInt32(talker.tempHL.MCHs.port);
 
             foreach (ARGstruct arg in talker.tempHL.argList)
             {
@@ -91,10 +92,21 @@ namespace SOA1_C
 
         private void execbtl_Click(object sender, EventArgs e)
         {
+
+            string[] inputs = { "","",""};
+            int Count = 0;
             foreach(TextBox tb in argTBs)
             {
-                tb.Text = "Meow";
+               inputs[Count] = tb.Text ;
+                Count++;
             }
+
+            servicetalker.execService(talker.tempHL.SRVs.serviceName, talker.tempHL.SRVs.numARGS, talker.tempHL.argList);
+
+
+
+
+
         }
 
         private void button2_Click(object sender, EventArgs e)
