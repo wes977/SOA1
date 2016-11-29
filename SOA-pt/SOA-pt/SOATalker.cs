@@ -62,8 +62,8 @@ namespace SOA_pt
 
                 stm.Write(ba, 0, ba.Length);
 
-                byte[] bb = new byte[100];
-                int k = stm.Read(bb, 0, 100);
+                byte[] bb = new byte[1000];
+                int k = stm.Read(bb, 0, 1000);
 
                 for (int i = 0; i < k; i++)
                 {
@@ -193,7 +193,7 @@ namespace SOA_pt
             SRVtemp.teamName = serviceTag;
 
 
-            tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.QUERY);
+            tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.QUERY_SERVICE);
             tempWords[1] = tempHL.SRVBuilder(SRVtemp);
             SOAtalking(tempWords);
             return true;
@@ -219,7 +219,7 @@ namespace SOA_pt
 
             SRVtemp.serviceName = serviceName;
             SRVtemp.numARGS = numArgs;
-            tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.QUERY);
+            tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.EXEC_SERVICE);
             tempWords[1] = tempHL.SRVBuilder(SRVtemp);
             int counter = 0;
             foreach (ARGstruct a in args)
