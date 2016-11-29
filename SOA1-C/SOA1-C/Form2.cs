@@ -16,6 +16,7 @@ namespace SOA1_C
         private List<DataMembers> lOutputDataMembers = new List<DataMembers>();
         List<Panel> ls = new List<Panel>();
         HL7Builder temp = new HL7Builder();
+        SOA
         public Form2()
         {
             InitializeComponent();
@@ -50,7 +51,7 @@ namespace SOA1_C
 
             lOutputDataMembers.Add(temp3);
             lOutputDataMembers.Add(temp4);
-            temp.HLStringDebuilder("SOA|OK|||3|");
+            //temp.HLStringDebuilder("SOA|OK|||3|");
         }
 
         private void Form2_FormClosed(object sender, FormClosedEventArgs e)
