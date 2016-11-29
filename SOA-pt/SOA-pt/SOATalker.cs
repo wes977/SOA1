@@ -24,7 +24,7 @@ namespace SOA_pt
             set { _Port = value; }
         }
 
-        public string  talkToSOA(string[] words)
+        public string talkToSOA(string[] words)
         {
             string returner = "";
             string allWords = "";
@@ -42,9 +42,9 @@ namespace SOA_pt
                 tcpclnt.Connect(_IP, _Port);
 
                 allWords += BOM;
-                foreach (string s in  words)
+                foreach (string s in words)
                 {
-                    if (s =="")
+                    if (s == "")
                     {
                         break;
                     }
@@ -54,10 +54,10 @@ namespace SOA_pt
                 allWords += EOM;
                 allWords += EOS;
 
-                
+
                 Stream stm = tcpclnt.GetStream();
 
-                ASCIIEncoding asen = new ASCIIEncoding(); 
+                ASCIIEncoding asen = new ASCIIEncoding();
                 byte[] ba = asen.GetBytes(allWords); // Sending it all to bytes so I can send that shit adsf
 
                 stm.Write(ba, 0, ba.Length);
@@ -68,19 +68,20 @@ namespace SOA_pt
                 for (int i = 0; i < k; i++)
                 {
                     returner += Convert.ToChar(bb[i]);
-                }                
+                }
                 tcpclnt.Close();
             }
 
             catch (Exception e)
             {
-               returner +=  string.Format("Error..... " + e.StackTrace);
+                returner += string.Format("Error..... " + e.StackTrace);
             }
             return returner;
 
         }
-        public void SOAtalking(string[] things)
+        public bool SOAtalking(string[] things)
         {
+            bool returner = false;
             DRCstruct DRCtemp = new DRCstruct();
             INFstruct INFtemp = new INFstruct();
             SOAstruct SOAtemp = new SOAstruct();
@@ -95,37 +96,105 @@ namespace SOA_pt
 
             switch (tempHL.HLStringDebuilder(temp.talkToSOA(things)))
             {
-                case commandType.DRC:
 
-                    break;
-                case commandType.INF:
-
-                    break;
                 case commandType.SOA:
                     Console.WriteLine(tempHL.SOAs.allGood);
                     Console.WriteLine(tempHL.SOAs.errorCode);
                     Console.WriteLine(tempHL.SOAs.errorMessage);
                     Console.WriteLine(tempHL.SOAs.numSegments);
+                    returner = true;
                     break;
-                case commandType.SRV:
+                default:
+                    returner = false;
+                    break;
 
-                    break;
-                case commandType.ARG:
-
-                    break;
-                case commandType.MCH:
-
-                    break;
-                case commandType.RSP:
-
-                    break;
-                case commandType.PUB:
-
-                    break;
             }
+            return returner;
         }
 
+        public bool publishService()
+        {
+            bool returner = false;
+            string[] tempWords =
+            {
+                "","","","","","","","","",""
+            };
 
+
+            HL7Builder tempHL = new HL7Builder();
+            SOATalker temp = new SOATalker();
+            DRCstruct DRCtemp = new DRCstruct();
+            SRVstruct SRVtemp = new SRVstruct();
+            ARGstruct ARGtemp = new ARGstruct();
+            MCHstruct MCHtemp = new MCHstruct();
+            RSPstruct RSPtemp = new RSPstruct();
+            PUBstruct PUBtemp = new PUBstruct();
+
+            //publiching the thing and all that
+            DRCtemp.teamName = "WestNet";
+            DRCtemp.teamID = "1186";
+            tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.PUB_SERVICE);
+
+            // All the service information 
+            SRVtemp.teamName = "GIORP-TOTAL";
+            SRVtemp.serviceName = "giorpTotaller";
+            SRVtemp.securityLevel = "1";
+            SRVtemp.numARGS = "2";
+            SRVtemp.numResponses = "5";
+            SRVtemp.description = "This totals the purchase and all that jazz";
+            tempWords[1] = tempHL.SRVBuilder(SRVtemp);
+            // ARGS
+            ARGtemp.argPosition = "1";
+            ARGtemp.argName = "province";
+            ARGtemp.argDataType = "string";
+            ARGtemp.argManOpt = "mandatory";
+            tempWords[2] = tempHL.ARGBuilder(ARGtemp);
+
+            ARGtemp.argPosition = "2";
+            ARGtemp.argName = "value";
+            ARGtemp.argDataType = "double";
+            ARGtemp.argManOpt = "mandatory";
+            tempWords[3] = tempHL.ARGBuilder(ARGtemp);
+
+            // RSP
+            RSPtemp.position = "1";
+            RSPtemp.name = "subTotal";
+            RSPtemp.DataType = "double";
+            RSPtemp.value = "";
+            tempWords[4] = tempHL.RSPBuilder(RSPtemp);
+
+            RSPtemp.position = "2";
+            RSPtemp.name = "PST";
+            RSPtemp.DataType = "double";
+            RSPtemp.value = "";
+            tempWords[5] = tempHL.RSPBuilder(RSPtemp);
+
+            RSPtemp.position = "3";
+            RSPtemp.name = "HST";
+            RSPtemp.DataType = "double";
+            RSPtemp.value = "";
+            tempWords[6] = tempHL.RSPBuilder(RSPtemp);
+
+            RSPtemp.position = "4";
+            RSPtemp.name = "GST";
+            RSPtemp.DataType = "double";
+            RSPtemp.value = "";
+            tempWords[7] = tempHL.RSPBuilder(RSPtemp);
+
+            RSPtemp.position = "5";
+            RSPtemp.name = "Total";
+            RSPtemp.DataType = "double";
+            RSPtemp.value = "";
+            tempWords[8] = tempHL.RSPBuilder(RSPtemp);
+
+            // MCH
+            MCHtemp.IP = "10.113.21.147";
+            MCHtemp.port = "50002";
+            tempWords[9] = tempHL.MCHBuilder(MCHtemp);
+
+            // Sending it  asdf
+            return temp.SOAtalking(tempWords);
+        }
 
     }
 }
