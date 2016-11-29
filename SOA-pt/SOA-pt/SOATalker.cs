@@ -251,7 +251,7 @@ namespace SOA_pt
 
             //publiching the thing and all that
             DRCtemp.teamName = "WestNet";
-            DRCtemp.teamID = "1186";
+            DRCtemp.teamID = "1189";
             tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.PUB_SERVICE);
 
             // All the service information 
@@ -307,7 +307,7 @@ namespace SOA_pt
             tempWords[8] = tempHL.RSPBuilder(RSPtemp);
 
             // MCH
-            MCHtemp.IP = "10.113.21.147";
+            MCHtemp.IP = "10.113.21.163";
             MCHtemp.port = "50002";
             tempWords[9] = tempHL.MCHBuilder(MCHtemp);
 

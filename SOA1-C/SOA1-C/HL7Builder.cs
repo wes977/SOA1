@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace SOA1_C
 {
@@ -423,27 +424,48 @@ namespace SOA1_C
         }
     }
 
+    //builder 
     class HL7Builder
     {
 
         char separatingChar = '|';
         private string[] aCommandTypes = { "DRC", "INF", "SOA", "SRV", "ARG", "MCH", "RSP", "PUB" };
-        private string[] aRegistryCommands = { "REG-TEAM", "UNREG-TEAM", "QUERY-TEAM", "PUB_SERVICE", "QUERY-SERVICE", "EXEC-SERVICE" };
+        private string[] aRegistryCommands = { "REG-TEAM", "UNREG-TEAM", "QUERY-TEAM", "PUB-SERVICE", "QUERY-SERVICE", "EXEC-SERVICE" };
         private string message;
-        private Validation validate = new Validation();
-        public void RegistryStringBuilder(commandType CT, registryCommands c, string teamName, string teamID)
+        private int BOMunicode = 11;
+        private int EOSunicode = 13;
+        private int EOMunicode = 28;
+        public DRCstruct DRCs = new DRCstruct();
+        public INFstruct INFs = new INFstruct();
+        public SOAstruct SOAs = new SOAstruct();
+        public SRVstruct SRVs = new SRVstruct();
+        public ARGstruct ARGs = new ARGstruct();
+        public MCHstruct MCHs = new MCHstruct();
+        public RSPstruct RSPs = new RSPstruct();
+        public PUBstruct PUBs = new PUBstruct();
+        public List<ARGstruct> argList = new List<ARGstruct>();
+        public List<RSPstruct> rspList = new List<RSPstruct>();
+        //private Validation validate = new Validation();
+        public string RegistryStringBuilder(commandType CT, registryCommands c, string teamName, string teamID)
         {
-            message = string.Format("{0}|{1}|{2}|{3}|", aCommandTypes[(int)CT], aRegistryCommands[(int)c], teamName, teamID);
+            return message = string.Format("{0}|{1}|{2}|{3}|", aCommandTypes[(int)CT], aRegistryCommands[(int)c], teamName, teamID);
         }
 
-        public void HLStringDebuilder(string input)
+        public commandType HLStringDebuilder(string input)
         {
+            commandType returner;
+            char BOM = (char)BOMunicode;
+            char EOS = (char)EOSunicode;
+            char EOM = (char)EOMunicode;
+            input = input.Replace(BOM, ' ');
+            input = input.Replace(EOS, ' ');
+            input = input.Replace(EOM, ' ');
             string[] values = input.Split(separatingChar);
             int commandTypeNum = 0;
             int i = 0;
             foreach (string s in aCommandTypes) // Checking what command it is 
             {
-                if (s == values[0])
+                if (s == values[0].Trim())
                 {
                     commandTypeNum = i;
                 }
@@ -452,9 +474,9 @@ namespace SOA1_C
 
             switch (commandTypeNum)
             {
-                case (int)commandType.DRC:
-                    DRCcommand(values);
-                    break;
+                //case (int)commandType.DRC:
+                //    DRCcommand(values);
+                //    break;
                 case (int)commandType.INF:
                     INFcommand(values);
                     break;
@@ -477,18 +499,36 @@ namespace SOA1_C
                     PUBcommand(values);
                     break;
             }
-
+            returner = (commandType)commandTypeNum;
+            return returner;
         }
 
+        public commandType breakingUpString(string input)
+        {
+            char BOM = (char)BOMunicode;
+            char EOS = (char)EOSunicode;
+            char EOM = (char)EOMunicode;
+            input = input.Replace(BOM, ' ');
+            input = input.Replace(EOM, ' ');
+            string regexer = "";
+            regexer += EOS;
+            string[] lines = Regex.Split(input, regexer);
+
+            foreach (string l in lines)
+            {
+                HLStringDebuilder(l);
+            }
+            return commandType.SOA; 
+        }
 
         // DECONSTRUCTORS 
         private void DRCcommand(string[] inputValues)
         {
-            DRCstruct DRCtemp = new DRCstruct();
+
             if (inputValues.Count() == 4)
             {
-                DRCtemp.teamName = inputValues[2];
-                DRCtemp.teamID = inputValues[3];
+                DRCs.teamName = inputValues[2];
+                DRCs.teamID = inputValues[3];
             }
             else
             {
@@ -498,61 +538,62 @@ namespace SOA1_C
         }
         private void INFcommand(string[] inputValues)
         {
-            INFstruct INFtemp = new INFstruct();
 
-            INFtemp.teamName = inputValues[1];
-            INFtemp.teamID = inputValues[2];
-            INFtemp.serviceTag = inputValues[3];
+
+            INFs.teamName = inputValues[1];
+            INFs.teamID = inputValues[2];
+            INFs.serviceTag = inputValues[3];
 
 
         }
         private void SOAcommand(string[] inputValues)
         {
-            SOAstruct SOAtemp = new SOAstruct();
 
-            SOAtemp.allGood = inputValues[1];
-            SOAtemp.errorCode = inputValues[2];
-            SOAtemp.errorMessage = inputValues[3];
-            SOAtemp.numSegments = inputValues[4];
+
+            SOAs.allGood = inputValues[1];
+            SOAs.errorCode = inputValues[2];
+            SOAs.errorMessage = inputValues[3];
+            SOAs.numSegments = inputValues[4];
 
 
         }
         private void SRVcommand(string[] inputValues)
         {
-            SRVstruct SRVtemp = new SRVstruct();
-            SRVtemp.serviceName = inputValues[1];
-            SRVtemp.securityLevel = inputValues[2];
-            SRVtemp.numARGS = inputValues[3];
-            SRVtemp.numResponses = inputValues[4];
-            SRVtemp.description = inputValues[5];
+
+            SRVs.serviceName = inputValues[1];
+            SRVs.securityLevel = inputValues[2];
+            SRVs.numARGS = inputValues[3];
+            SRVs.numResponses = inputValues[4];
+            SRVs.description = inputValues[5];
         }
         private void ARGcommand(string[] inputValues)
         {
-            ARGstruct ARGtemp = new ARGstruct();
-            ARGtemp.argPosition = inputValues[1];
-            ARGtemp.argName = inputValues[2];
-            ARGtemp.argDataType = inputValues[3];
-            ARGtemp.argManOpt = inputValues[4];
+            ARGs.argPosition = inputValues[1];
+            ARGs.argName = inputValues[2];
+            ARGs.argDataType = inputValues[3];
+            ARGs.argManOpt = inputValues[4];
+            argList.Add(ARGs);
         }
         private void MCHcommand(string[] inputValues)
         {
-            MCHstruct MCHtemp = new MCHstruct();
-            MCHtemp.IP = inputValues[1];
-            MCHtemp.port = inputValues[2];
+
+            MCHs.IP = inputValues[1];
+            MCHs.port = inputValues[2];
         }
         private void RSPcommand(string[] inputValues)
         {
-            RSPstruct RSPtemp = new RSPstruct();
-            RSPtemp.position = inputValues[1];
-            RSPtemp.name = inputValues[2];
-            RSPtemp.DataType = inputValues[3];
+
+            RSPs.position = inputValues[1];
+            RSPs.name = inputValues[2];
+            RSPs.DataType = inputValues[3];
+            rspList.Add(RSPs);
         }
         private void PUBcommand(string[] inputValues)
         {
-            PUBstruct PUBtemp = new PUBstruct();
-            PUBtemp.allGood = inputValues[1];
-            PUBtemp.errorCode = inputValues[2];
-            PUBtemp.errorMessage = inputValues[3];
+
+            PUBs.allGood = inputValues[1];
+            PUBs.errorCode = inputValues[2];
+            PUBs.errorMessage = inputValues[3];
         }
 
         // Command builder
@@ -565,25 +606,25 @@ namespace SOA1_C
         public string INFBuilder(INFstruct builder)
         {
             string cmd = "";
-            cmd = string.Format("INF|{0}|{1}|{2}|", builder.teamName, builder.teamID,builder.serviceTag);
+            cmd = string.Format("INF|{0}|{1}|{2}|", builder.teamName, builder.teamID, builder.serviceTag);
             return cmd;
         }
         public string SOABuilder(SOAstruct builder)
         {
             string cmd = "";
-            cmd = string.Format("SOA|{0}|{1}|{2}|{3}|", builder.allGood, builder.errorCode, builder.errorMessage,builder.numSegments);
+            cmd = string.Format("SOA|{0}|{1}|{2}|{3}|", builder.allGood, builder.errorCode, builder.errorMessage, builder.numSegments);
             return cmd;
         }
         public string SRVBuilder(SRVstruct builder)
         {
             string cmd = "";
-            cmd = string.Format("SRV|{0}|{1}|{2}|{3}|{4}|{5}|{6}|", builder.teamName, builder.serviceName, builder.securityLevel, builder.numARGS,builder.numResponses,builder.description);
+            cmd = string.Format("SRV|{0}|{1}|{2}|{3}|{4}|{5}|", builder.teamName, builder.serviceName, builder.securityLevel, builder.numARGS, builder.numResponses, builder.description);
             return cmd;
         }
         public string ARGBuilder(ARGstruct builder)
         {
             string cmd = "";
-            cmd = string.Format("ARG|{0}|{1}|{2}|{3}|{4}|{5}|", builder.argPosition, builder.argName, builder.argDataType, builder.argManOpt, builder.value);
+            cmd = string.Format("ARG|{0}|{1}|{2}|{3}|{4}|", builder.argPosition, builder.argName, builder.argDataType, builder.argManOpt, builder.value);
             return cmd;
         }
         public string MCHBuilder(MCHstruct builder)
@@ -595,7 +636,7 @@ namespace SOA1_C
         public string RSPBuilder(RSPstruct builder)
         {
             string cmd = "";
-            cmd = string.Format("RSP|{0}|{1}|{2}|", builder.position, builder.name, builder.DataType, builder.value);
+            cmd = string.Format("RSP|{0}|{1}|{2}|{3}|", builder.position, builder.name, builder.DataType, builder.value);
             return cmd;
         }
         public string PUBBuilder(PUBstruct builder)

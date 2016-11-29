@@ -16,7 +16,7 @@ namespace SOA1_C
         private List<DataMembers> lOutputDataMembers = new List<DataMembers>();
         List<Panel> ls = new List<Panel>();
         HL7Builder temp = new HL7Builder();
-        SOA
+        SOATalker talker = new SOATalker();
         public Form2()
         {
             InitializeComponent();
@@ -51,6 +51,8 @@ namespace SOA1_C
 
             lOutputDataMembers.Add(temp3);
             lOutputDataMembers.Add(temp4);
+            talker.regTeam();
+            talker.queryService("GIORP-TOTAL");
             //temp.HLStringDebuilder("SOA|OK|||3|");
         }
 
@@ -63,7 +65,7 @@ namespace SOA1_C
         {
             int i = 0;
             int j = 0;
-            foreach (DataMembers dm in lInputDataMembers)
+            foreach (ARGstruct arg in talker.tempHL.argList)
             {
                 Panel pan = new Panel();
                 pan.Name = "panel" + i;
@@ -72,8 +74,8 @@ namespace SOA1_C
                 TextBox tb = new TextBox();
                 tb.Location = new Point(10, 25);
                 tb.Size = new Size(70, 20);
-                l.Text = dm.paraName;
-                tb.Text = dm.paraType;
+                l.Text = arg.argName;
+                tb.Text = arg.argDataType;
                 pan.Location = new Point(10, i * 50 + 100);
                 pan.Size = new Size(180, 50);
                 pan.Controls.Add(l);
@@ -81,7 +83,7 @@ namespace SOA1_C
                 this.Controls.Add(pan);
                 i++;
             }
-            foreach (DataMembers dm in lOutputDataMembers)
+            foreach (RSPstruct rsp in talker.tempHL.rspList)
             {
                 Panel pan = new Panel();
                 pan.Name = "panelOut" + j;
@@ -90,8 +92,8 @@ namespace SOA1_C
                 TextBox tb = new TextBox();
                 tb.Location = new Point(10, 25);
                 tb.Size = new Size(70, 20);
-                l.Text = dm.paraName;
-                tb.Text = dm.paraType;
+                l.Text = rsp.name;
+                tb.Text = rsp.DataType;
                 pan.Location = new Point(200, j * 50 + 100);
                 pan.Size = new Size(200, 50);
                 pan.Controls.Add(l);

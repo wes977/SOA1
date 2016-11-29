@@ -13,6 +13,8 @@ namespace SOA1_C
         private string _IP = "10.113.21.163";
         private int _Port = 3128;
 
+        public HL7Builder tempHL = new HL7Builder();
+
         public string IP
         {
             get { return _IP; }
@@ -91,17 +93,15 @@ namespace SOA1_C
             RSPstruct RSPtemp = new RSPstruct();
             PUBstruct PUBtemp = new PUBstruct();
 
-            HL7Builder tempHL = new HL7Builder();
-            SOATalker temp = new SOATalker();
 
-            switch (tempHL.HLStringDebuilder(temp.talkToSOA(things)))
+            switch (tempHL.breakingUpString(talkToSOA(things)))
             {
 
                 case commandType.SOA:
-                    Console.WriteLine(tempHL.SOAs.allGood);
-                    Console.WriteLine(tempHL.SOAs.errorCode);
-                    Console.WriteLine(tempHL.SOAs.errorMessage);
-                    Console.WriteLine(tempHL.SOAs.numSegments);
+                    //Console.WriteLine(tempHL.SOAs.allGood);
+                    //Console.WriteLine(tempHL.SOAs.errorCode);
+                    //Console.WriteLine(tempHL.SOAs.errorMessage);
+                    //Console.WriteLine(tempHL.SOAs.numSegments);
                     returner = true;
                     break;
                 default:
@@ -188,7 +188,7 @@ namespace SOA1_C
 
             // Registerig the team fromt he service and all that 
             DRCtemp.teamName = "WestNet";
-            DRCtemp.teamID = "1186";
+            DRCtemp.teamID = "1189";
 
             SRVtemp.teamName = serviceTag;
 
