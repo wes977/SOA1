@@ -45,8 +45,8 @@ namespace SOA_pt
             tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.PUB_SERVICE);
 
             // All the service information 
-            SRVtemp.teamName = "PT";
-            SRVtemp.serviceName = "PT-SERVICE";
+            SRVtemp.teamName = "GIORP-TOTAL";
+            SRVtemp.serviceName = "giorpTotaller";
             SRVtemp.securityLevel = "1";
             SRVtemp.numARGS = "2";
             SRVtemp.numResponses = "5";

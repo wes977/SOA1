@@ -10,7 +10,7 @@ namespace SOA_pt
 {
     class SOATalker
     {
-        private string _IP = "localhost";
+        private string _IP = "10.113.21.163";
         private int _Port = 3128;
 
         public string IP
