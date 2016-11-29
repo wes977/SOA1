@@ -44,6 +44,7 @@
             this.exeBTN.TabIndex = 0;
             this.exeBTN.Text = "Execute";
             this.exeBTN.UseVisualStyleBackColor = true;
+            this.exeBTN.Click += new System.EventHandler(this.exeBTN_Click);
             // 
             // teamNamelbl
             // 
