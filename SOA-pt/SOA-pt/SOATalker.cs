@@ -308,7 +308,7 @@ namespace SOA_pt
 
             // MCH
             MCHtemp.IP = "10.113.21.163";
-            MCHtemp.port = "50002";
+            MCHtemp.port = "2693";
             tempWords[9] = tempHL.MCHBuilder(MCHtemp);
 
             // Sending it  asdf

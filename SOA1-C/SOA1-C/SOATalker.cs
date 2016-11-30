@@ -200,7 +200,7 @@ namespace SOA1_C
 
         }
 
-        public bool execService(string serviceName , string numArgs , List<ARGstruct> args)
+        public bool execService(string serviceName , string numArgs , ARGstruct[] args)
         {
             DRCstruct DRCtemp = new DRCstruct();
             SRVstruct SRVtemp = new SRVstruct();
@@ -221,7 +221,7 @@ namespace SOA1_C
             SRVtemp.numARGS = numArgs;
             tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.EXEC_SERVICE);
             tempWords[1] = tempHL.SRVBuilder(SRVtemp);
-            int counter = 0;
+            int counter = 2;
             foreach (ARGstruct a in args)
             {
                 tempWords[counter] = tempHL.ARGBuilder(a);
@@ -307,8 +307,8 @@ namespace SOA1_C
             tempWords[8] = tempHL.RSPBuilder(RSPtemp);
 
             // MCH
-            MCHtemp.IP = "10.113.21.147";
-            MCHtemp.port = "50002";
+            MCHtemp.IP = "10.113.21.163";
+            MCHtemp.port = "2693";
             tempWords[9] = tempHL.MCHBuilder(MCHtemp);
 
             // Sending it  asdf

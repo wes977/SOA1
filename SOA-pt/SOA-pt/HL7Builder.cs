@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace SOA_pt
 {
@@ -442,10 +443,12 @@ namespace SOA_pt
         public MCHstruct MCHs = new MCHstruct();
         public RSPstruct RSPs = new RSPstruct();
         public PUBstruct PUBs = new PUBstruct();
+        public List<ARGstruct> argList = new List<ARGstruct>();
+        public List<RSPstruct> rspList = new List<RSPstruct>();
         //private Validation validate = new Validation();
         public string RegistryStringBuilder(commandType CT, registryCommands c, string teamName, string teamID)
         {
-           return message = string.Format("{0}|{1}|{2}|{3}|", aCommandTypes[(int)CT], aRegistryCommands[(int)c], teamName, teamID);
+            return message = string.Format("{0}|{1}|{2}|{3}|", aCommandTypes[(int)CT], aRegistryCommands[(int)c], teamName, teamID);
         }
 
         public commandType HLStringDebuilder(string input)
@@ -471,9 +474,9 @@ namespace SOA_pt
 
             switch (commandTypeNum)
             {
-                case (int)commandType.DRC:
-                    DRCcommand(values);
-                    break;
+                //case (int)commandType.DRC:
+                //    DRCcommand(values);
+                //    break;
                 case (int)commandType.INF:
                     INFcommand(values);
                     break;
@@ -500,6 +503,25 @@ namespace SOA_pt
             return returner;
         }
 
+        public commandType breakingUpString(string input)
+        {
+            argList.Clear();
+            rspList.Clear();
+            char BOM = (char)BOMunicode;
+            char EOS = (char)EOSunicode;
+            char EOM = (char)EOMunicode;
+            input = input.Replace(BOM, ' ');
+            input = input.Replace(EOM, ' ');
+            string regexer = "";
+            regexer += EOS;
+            string[] lines = Regex.Split(input, regexer);
+
+            foreach (string l in lines)
+            {
+                HLStringDebuilder(l);
+            }
+            return commandType.SOA;
+        }
 
         // DECONSTRUCTORS 
         private void DRCcommand(string[] inputValues)
@@ -539,12 +561,12 @@ namespace SOA_pt
         }
         private void SRVcommand(string[] inputValues)
         {
-
-            SRVs.serviceName = inputValues[1];
-            SRVs.securityLevel = inputValues[2];
-            SRVs.numARGS = inputValues[3];
-            SRVs.numResponses = inputValues[4];
-            SRVs.description = inputValues[5];
+            SRVs.teamName = inputValues[1];
+            SRVs.serviceName = inputValues[2];
+            SRVs.securityLevel = inputValues[3];
+            SRVs.numARGS = inputValues[4];
+            SRVs.numResponses = inputValues[5];
+            SRVs.description = inputValues[6];
         }
         private void ARGcommand(string[] inputValues)
         {
@@ -552,6 +574,8 @@ namespace SOA_pt
             ARGs.argName = inputValues[2];
             ARGs.argDataType = inputValues[3];
             ARGs.argManOpt = inputValues[4];
+            ARGs.value = inputValues[5];
+            argList.Add(ARGs);
         }
         private void MCHcommand(string[] inputValues)
         {
@@ -565,6 +589,7 @@ namespace SOA_pt
             RSPs.position = inputValues[1];
             RSPs.name = inputValues[2];
             RSPs.DataType = inputValues[3];
+            rspList.Add(RSPs);
         }
         private void PUBcommand(string[] inputValues)
         {

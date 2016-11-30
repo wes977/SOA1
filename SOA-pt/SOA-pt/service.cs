@@ -27,6 +27,8 @@ namespace SOA_pt
     {
         private eProvince selectedProvince;
         private double value;
+
+
         public double getSubTotal()
         {
             return value;
@@ -145,7 +147,7 @@ namespace SOA_pt
             return returner;
         }
 
-        public bool getValue(string valueString)
+        public bool setValue(string valueString)
         {
             bool returner = false;
             try
@@ -164,7 +166,7 @@ namespace SOA_pt
             return returner;
         }
 
-        public bool getProvince(string provinceString)
+        public bool setProvince(string provinceString)
         {
             bool returner = false;
             string[] provinces =
@@ -212,7 +214,7 @@ namespace SOA_pt
             counter = 0;
             foreach (string st in provincesABV)
             {
-                if (st == provinceString)
+                if (st.ToUpper() == provinceString)
                 {
                     selectedProvince = (eProvince)counter;
                     returner = true;

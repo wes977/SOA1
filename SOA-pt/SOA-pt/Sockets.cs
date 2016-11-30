@@ -14,6 +14,16 @@ namespace SOA_pt
         private int _port;
         private IPAddress _IP;
         public bool runSocket;
+        HL7Builder stringBuilder = new HL7Builder();
+        public DRCstruct DRCs = new DRCstruct();
+        public INFstruct INFs = new INFstruct();
+        public SOAstruct SOAs = new SOAstruct();
+        public SRVstruct SRVs = new SRVstruct();
+        public ARGstruct ARGs = new ARGstruct();
+        public MCHstruct MCHs = new MCHstruct();
+        public RSPstruct RSPs = new RSPstruct();
+        public PUBstruct PUBs = new PUBstruct();
+        service srvtemp = new service();
         public string sIP
         {
             get
@@ -47,10 +57,10 @@ namespace SOA_pt
                 try
                 {
                     IPAddress ipAd = IPAddress.Parse("10.113.21.163");
-                    port = 2693;
+                    port = 50002;
                     // use local m/c IP address, and 
                     // use the same in the client
-
+                    string[] words = { "", "", "", "", "", "", "", };
                     /* Initializes the Listener */
                     TcpListener myList = new TcpListener(ipAd, _port);
 
@@ -59,11 +69,76 @@ namespace SOA_pt
                     Socket s = myList.AcceptSocket();
                     byte[] b = new byte[1000];
                     int k = s.Receive(b);
+
+                    string message = "";
                     for (int i = 0; i < k; i++)
-                        Console.Write(Convert.ToChar(b[i]));
+                    {
+                        message += Convert.ToChar(b[i]);
+                    }
+                    stringBuilder.breakingUpString(message);
+                    srvtemp.setProvince(stringBuilder.argList[0].value);
+                    srvtemp.setValue(stringBuilder.argList[1].value);
+
+                    PUBs.allGood = "OK";
+                    PUBs.numSegments = "6";
+                    words[0] = stringBuilder.PUBBuilder(PUBs);
+
+                    RSPs.position = "1";
+                    RSPs.name = "subtotal";
+                    RSPs.DataType = "DOUBLE";
+                    RSPs.value = srvtemp.getSubTotal().ToString();
+                    words[1] = stringBuilder.RSPBuilder(RSPs);
+
+                    RSPs.position = "2";
+                    RSPs.name = "PST";
+                    RSPs.DataType = "DOUBLE";
+                    RSPs.value = srvtemp.getPST().ToString();
+                    words[2] = stringBuilder.RSPBuilder(RSPs);
+
+                    RSPs.position = "3";
+                    RSPs.name = "GST";
+                    RSPs.DataType = "DOUBLE";
+                    RSPs.value = srvtemp.getGST().ToString();
+                    words[3] = stringBuilder.RSPBuilder(RSPs);
+
+                    RSPs.position = "4";
+                    RSPs.name = "HST";
+                    RSPs.DataType = "DOUBLE";
+                    RSPs.value = srvtemp.getHST().ToString();
+                    words[4] = stringBuilder.RSPBuilder(RSPs);
+
+                    RSPs.position = "5";
+                    RSPs.name = "Total";
+                    RSPs.DataType = "DOUBLE";
+                    RSPs.value = srvtemp.getTotal().ToString();
+                    words[5] = stringBuilder.RSPBuilder(RSPs);
+
+                    string allWords = "";
+                    int BOMunicode = 11;
+                    int EOSunicode = 13;
+                    int EOMunicode = 28;
+                    char BOM = (char)BOMunicode;
+                    char EOS = (char)EOSunicode;
+                    char EOM = (char)EOMunicode;
+
+
+                        allWords += BOM;
+                        foreach (string st in words)
+                        {
+                            if (st == "")
+                            {
+                                break;
+                            }
+                            allWords += st;
+                            allWords += EOS;
+                        }
+                        allWords += EOM;
+                        allWords += EOS;
+
+
 
                     ASCIIEncoding asen = new ASCIIEncoding();
-                    s.Send(asen.GetBytes("The string was recieved by the server."));
+                    s.Send(asen.GetBytes(allWords));
                     s.Close();
                     myList.Stop();
                 }

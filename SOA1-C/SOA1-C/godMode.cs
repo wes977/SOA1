@@ -24,20 +24,9 @@ namespace SOA1_C
         public SNbtn()
         {
             InitializeComponent();
-
+            int i = 0;
             talker.regTeam();
             talker.queryService("GIORP-TOTAL");
-            fillInputAndOutput();
-        }
-
-        private void fillInputAndOutput()
-        {
-            int i = 0;
-            int j = 0;
-            srvDescLBl.Text = talker.tempHL.SRVs.description;
-            servicetalker.IP = talker.tempHL.MCHs.IP;
-            servicetalker.port = Convert.ToInt32(talker.tempHL.MCHs.port);
-
             foreach (ARGstruct arg in talker.tempHL.argList)
             {
                 Panel pan = new Panel();
@@ -57,7 +46,19 @@ namespace SOA1_C
                 argTBs.Add(tb);
                 i++;
             }
-            foreach (RSPstruct rsp in talker.tempHL.rspList)
+            fillInputAndOutput();
+        }
+
+        private void fillInputAndOutput()
+        {
+
+            int j = 0;
+            srvDescLBl.Text = talker.tempHL.SRVs.description;
+            servicetalker.IP = talker.tempHL.MCHs.IP;
+            servicetalker.port = Convert.ToInt32(talker.tempHL.MCHs.port);
+
+
+            foreach (RSPstruct rsp in servicetalker.tempHL.rspList)
             {
                 Panel pan = new Panel();
                 pan.Name = "panelOut" + j;
@@ -67,7 +68,7 @@ namespace SOA1_C
                 tb.Location = new Point(10, 25);
                 tb.Size = new Size(70, 20);
                 l.Text = rsp.name;
-                tb.Text = rsp.DataType;
+                tb.Text = rsp.value;
                 pan.Location = new Point(610, j * 50 + 250);
                 pan.Size = new Size(200, 50);
                 pan.Controls.Add(l);
@@ -95,16 +96,31 @@ namespace SOA1_C
 
             string[] inputs = { "","",""};
             int Count = 0;
+            ARGstruct[] aARGs;
+            
+            //servicetalker.tempHL.rspList.Clear();
             foreach(TextBox tb in argTBs)
             {
                inputs[Count] = tb.Text ;
                 Count++;
             }
-
-            servicetalker.execService(talker.tempHL.SRVs.serviceName, talker.tempHL.SRVs.numARGS, talker.tempHL.argList);
-
-
-
+            aARGs = talker.tempHL.argList.ToArray();
+            aARGs[0].value = inputs[0];
+            aARGs[1].value = inputs[1];
+            servicetalker.execService(talker.tempHL.SRVs.serviceName, talker.tempHL.SRVs.numARGS, aARGs);
+            //argTBs.Clear();
+            
+            fillInputAndOutput();
+            int c = 0;
+            foreach (TextBox textB in rspTBs)
+            {
+                textB.Text = servicetalker.tempHL.rspList[c].value;
+                c++;
+                if (c == 5)
+                {
+                    break;
+                }
+            }
 
 
         }

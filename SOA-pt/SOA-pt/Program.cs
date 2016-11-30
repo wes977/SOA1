@@ -20,7 +20,7 @@ namespace SOA_pt
             temp.regTeam();
             // Publishing the service and all that 
             temp.publishService();
-         //   listener.startSocket();
+            listener.startSocket();
             //temp.queryService("GIORP-TOTAL");
             //temp.queryTeam("WestNet", "1186", "GIORP-TOTAL");
             Console.ReadLine();

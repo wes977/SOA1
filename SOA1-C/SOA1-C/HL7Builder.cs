@@ -505,6 +505,7 @@ namespace SOA1_C
 
         public commandType breakingUpString(string input)
         {
+            rspList.Clear();
             char BOM = (char)BOMunicode;
             char EOS = (char)EOSunicode;
             char EOM = (char)EOMunicode;
@@ -586,6 +587,7 @@ namespace SOA1_C
             RSPs.position = inputValues[1];
             RSPs.name = inputValues[2];
             RSPs.DataType = inputValues[3];
+            RSPs.value = inputValues[4];
             rspList.Add(RSPs);
         }
         private void PUBcommand(string[] inputValues)
