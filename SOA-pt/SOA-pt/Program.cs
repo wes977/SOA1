@@ -13,7 +13,7 @@ namespace SOA_pt
 
         static void Main(string[] args)
         {
-
+            Logger.startLogger();
             SOATalker temp = new SOATalker();
             Sockets listener = new Sockets();
             
@@ -22,11 +22,14 @@ namespace SOA_pt
             temp.port = Int32.Parse( ConfigurationManager.AppSettings["Port"]);
             string tName = ConfigurationManager.AppSettings["teamName"];
             // Registering the Team and all that jazz 
+
+            Logger.Log("Reg Team");
             temp.regTeam(tName);
 
             // Publishing the service and all that 
+            Logger.Log("Puiblish Service");
             temp.publishService();
-
+            Logger.Log("Starting Listening and all that ");
             listener.startSocket(temp.teamID);
             //temp.queryService("GIORP-TOTAL");
             //temp.queryTeam("WestNet", "1186", "GIORP-TOTAL");
