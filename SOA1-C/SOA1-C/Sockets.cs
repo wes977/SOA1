@@ -69,7 +69,7 @@ namespace SOA1_C
                 }
                 catch (Exception e)
                 {
-
+                    Logger.Log("Error..... " + e.StackTrace);
                     Console.WriteLine("Error..... " + e.StackTrace);
 
                 }

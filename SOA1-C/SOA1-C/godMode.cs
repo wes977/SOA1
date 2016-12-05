@@ -26,7 +26,7 @@ namespace SOA1_C
             InitializeComponent();
             int i = 0;
             //talker.regTeam();
-            //talker.queryService("GIORP-TOTAL");
+           // talker.queryService("GIORP-TOTAL");
             foreach (ARGstruct arg in talker.tempHL.argList)
             {
                 Panel pan = new Panel();
@@ -121,21 +121,27 @@ namespace SOA1_C
             aARGs = talker.tempHL.argList.ToArray();
             aARGs[0].value = inputs[0];
             aARGs[1].value = inputs[1];
-            servicetalker.execService(talker.tempHL.SRVs.serviceName, talker.tempHL.SRVs.numARGS, aARGs);
-            //argTBs.Clear();
-            
-            fillInputAndOutput();
-            int c = 0;
-            foreach (TextBox textB in rspTBs)
+
+            string errorMes = servicetalker.execService(talker.tempHL.teamCode,teamNameTB.Text,talker.tempHL.SRVs.serviceName, talker.tempHL.SRVs.numARGS, aARGs);
+            if (errorMes == "")
             {
-                textB.Text = servicetalker.tempHL.rspList[c].value;
-                c++;
-                if (c == 5)
+                Errorlbl.Text = errorMes;
+                fillInputAndOutput();
+                int c = 0;
+                foreach (TextBox textB in rspTBs)
                 {
-                    break;
+                    textB.Text = servicetalker.tempHL.rspList[c].value;
+                    c++;
+                    if (c == 5)
+                    {
+                        break;
+                    }
                 }
             }
-
+            else
+            {
+                Errorlbl.Text = errorMes;
+            }
 
         }
 
@@ -148,6 +154,27 @@ namespace SOA1_C
         private void querybtn_Click(object sender, EventArgs e)
         {
             talker.queryService(serviceNameTB.Text,teamNameTB.Text,talker.tempHL.teamCode);
+            int i = 0;
+            foreach (ARGstruct arg in talker.tempHL.argList)
+            {
+                Panel pan = new Panel();
+                pan.Name = "panel" + i;
+                ls.Add(pan);
+                Label l = new Label();
+                TextBox tb = new TextBox();
+                tb.Location = new Point(10, 25);
+                tb.Size = new Size(70, 20);
+                l.Text = arg.argName;
+                tb.Text = arg.argDataType;
+                pan.Location = new Point(12, i * 50 + 250);
+                pan.Size = new Size(200, 50);
+                pan.Controls.Add(l);
+                pan.Controls.Add(tb);
+                this.Controls.Add(pan);
+                argTBs.Add(tb);
+                i++;
+            }
+            fillInputAndOutput();
             if ("" == talker.tempHL.SOAerrorChecker())
             {
                 if (talker.errorMsg != "")
@@ -160,6 +187,11 @@ namespace SOA1_C
             {
                 Errorlbl.Text = talker.tempHL.SOAerrorChecker();
             }
+        }
+
+        private void serviceNameTB_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

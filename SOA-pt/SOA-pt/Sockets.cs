@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Configuration;
 namespace SOA_pt
 {
     class Sockets
     {
         private string _sIP;
         private int _port;
-        private IPAddress _IP;
+
         public bool runSocket;
         HL7Builder stringBuilder = new HL7Builder();
         public DRCstruct DRCs = new DRCstruct();
@@ -24,6 +25,7 @@ namespace SOA_pt
         public RSPstruct RSPs = new RSPstruct();
         public PUBstruct PUBs = new PUBstruct();
         service srvtemp = new service();
+        SOATalker SOAtalker = new SOATalker();
         public string sIP
         {
             get
@@ -47,7 +49,7 @@ namespace SOA_pt
                 _port = value;
             }
         }
-        public void startSocket()
+        public void startSocket(string teamID)
         {
             runSocket = true;
 
@@ -76,43 +78,73 @@ namespace SOA_pt
                         message += Convert.ToChar(b[i]);
                     }
                     stringBuilder.breakingUpString(message);
-                    srvtemp.setProvince(stringBuilder.argList[0].value);
-                    srvtemp.setValue(stringBuilder.argList[1].value);
+                    if (!(SOAtalker.queryTeam(ConfigurationManager.AppSettings["teamName"], teamID, ConfigurationManager.AppSettings["serviceName"])))
+                    {
+                        PUBs.allGood = "NOT-OK";
+                        PUBs.errorCode = SOAtalker.tempSOA.errorCode;
+                        PUBs.errorMessage = SOAtalker.tempSOA.errorMessage;
+                        words[0] = stringBuilder.PUBBuilder(PUBs);
+                    }
+                    else
+                    {
 
-                    PUBs.allGood = "OK";
-                    PUBs.numSegments = "6";
-                    words[0] = stringBuilder.PUBBuilder(PUBs);
+                        if (srvtemp.setProvince(stringBuilder.argList[0].value))
+                        {
 
-                    RSPs.position = "1";
-                    RSPs.name = "subtotal";
-                    RSPs.DataType = "DOUBLE";
-                    RSPs.value = srvtemp.getSubTotal().ToString();
-                    words[1] = stringBuilder.RSPBuilder(RSPs);
 
-                    RSPs.position = "2";
-                    RSPs.name = "PST";
-                    RSPs.DataType = "DOUBLE";
-                    RSPs.value = srvtemp.getPST().ToString();
-                    words[2] = stringBuilder.RSPBuilder(RSPs);
+                            if (srvtemp.setValue(stringBuilder.argList[1].value))
 
-                    RSPs.position = "3";
-                    RSPs.name = "GST";
-                    RSPs.DataType = "DOUBLE";
-                    RSPs.value = srvtemp.getGST().ToString();
-                    words[3] = stringBuilder.RSPBuilder(RSPs);
+                            {
+                                PUBs.allGood = "OK";
+                                PUBs.numSegments = "6";
+                                words[0] = stringBuilder.PUBBuilder(PUBs);
 
-                    RSPs.position = "4";
-                    RSPs.name = "HST";
-                    RSPs.DataType = "DOUBLE";
-                    RSPs.value = srvtemp.getHST().ToString();
-                    words[4] = stringBuilder.RSPBuilder(RSPs);
+                                RSPs.position = "1";
+                                RSPs.name = "subtotal";
+                                RSPs.DataType = "DOUBLE";
+                                RSPs.value = srvtemp.getSubTotal().ToString();
+                                words[1] = stringBuilder.RSPBuilder(RSPs);
 
-                    RSPs.position = "5";
-                    RSPs.name = "Total";
-                    RSPs.DataType = "DOUBLE";
-                    RSPs.value = srvtemp.getTotal().ToString();
-                    words[5] = stringBuilder.RSPBuilder(RSPs);
+                                RSPs.position = "2";
+                                RSPs.name = "PST";
+                                RSPs.DataType = "DOUBLE";
+                                RSPs.value = srvtemp.getPST().ToString();
+                                words[2] = stringBuilder.RSPBuilder(RSPs);
 
+                                RSPs.position = "3";
+                                RSPs.name = "GST";
+                                RSPs.DataType = "DOUBLE";
+                                RSPs.value = srvtemp.getGST().ToString();
+                                words[3] = stringBuilder.RSPBuilder(RSPs);
+
+                                RSPs.position = "4";
+                                RSPs.name = "HST";
+                                RSPs.DataType = "DOUBLE";
+                                RSPs.value = srvtemp.getHST().ToString();
+                                words[4] = stringBuilder.RSPBuilder(RSPs);
+
+                                RSPs.position = "5";
+                                RSPs.name = "Total";
+                                RSPs.DataType = "DOUBLE";
+                                RSPs.value = srvtemp.getTotal().ToString();
+                                words[5] = stringBuilder.RSPBuilder(RSPs);
+                            }
+                            else
+                            {
+                                PUBs.allGood = "NOT-OK";
+                                PUBs.errorCode = "69";
+                                PUBs.errorMessage = "Bad Value could  not work with";
+                                words[0] = stringBuilder.PUBBuilder(PUBs);
+                            }
+                        }
+                        else
+                        {
+                            PUBs.allGood = "NOT-OK";
+                            PUBs.errorCode = "70";
+                            PUBs.errorMessage = "Bad province could  not work with";
+                            words[0] = stringBuilder.PUBBuilder(PUBs);
+                        }
+                    }
                     string allWords = "";
                     int BOMunicode = 11;
                     int EOSunicode = 13;
@@ -122,18 +154,18 @@ namespace SOA_pt
                     char EOM = (char)EOMunicode;
 
 
-                        allWords += BOM;
-                        foreach (string st in words)
+                    allWords += BOM;
+                    foreach (string st in words)
+                    {
+                        if (st == "")
                         {
-                            if (st == "")
-                            {
-                                break;
-                            }
-                            allWords += st;
-                            allWords += EOS;
+                            break;
                         }
-                        allWords += EOM;
+                        allWords += st;
                         allWords += EOS;
+                    }
+                    allWords += EOM;
+                    allWords += EOS;
 
 
 
@@ -141,6 +173,7 @@ namespace SOA_pt
                     s.Send(asen.GetBytes(allWords));
                     s.Close();
                     myList.Stop();
+
                 }
                 catch (Exception e)
                 {

@@ -14,7 +14,7 @@ namespace SOA1_C
         private int _Port = 3128;
         public string errorMsg;
         public HL7Builder tempHL = new HL7Builder();
-
+        public PUBstruct PUBs = new PUBstruct();
         public string IP
         {
             get { return _IP; }
@@ -77,8 +77,9 @@ namespace SOA1_C
             catch (Exception e)
             {
                 //returner += string.Format("Error..... " + e.StackTrace);
-errorMsg = string.Format("Error..... " + e.StackTrace);
+                errorMsg = string.Format("Error..... " + e.StackTrace);
                 returner = "";
+                Logger.Log("Error..... " + e.StackTrace);
             }
             return returner;
 
@@ -100,10 +101,15 @@ errorMsg = string.Format("Error..... " + e.StackTrace);
             {
 
                 case commandType.SOA:
-                    //Console.WriteLine(tempHL.SOAs.allGood);
-                    //Console.WriteLine(tempHL.SOAs.errorCode);
-                    //Console.WriteLine(tempHL.SOAs.errorMessage);
-                    //Console.WriteLine(tempHL.SOAs.numSegments);
+                    PUBs.allGood = tempHL.PUBs.allGood;
+                    PUBs.errorCode = tempHL.PUBs.errorCode;
+                    PUBs.errorMessage = tempHL.PUBs.errorMessage;
+                    returner = true;
+                    break;
+                case commandType.PUB:
+                    PUBs.allGood = tempHL.PUBs.allGood;
+                    PUBs.errorCode = tempHL.PUBs.errorCode;
+                    PUBs.errorMessage = tempHL.PUBs.errorMessage;
                     returner = true;
                     break;
                 default:
@@ -175,7 +181,7 @@ errorMsg = string.Format("Error..... " + e.StackTrace);
             SOAtalking(tempWords);
             return true;
         }
-        public bool queryTeam(string teamName , string teamID,string serviceTag)
+        public bool queryTeam(string teamName, string teamID, string serviceTag)
         {
             Logger.Log("Querying a team ");
             DRCstruct DRCtemp = new DRCstruct();
@@ -225,7 +231,7 @@ errorMsg = string.Format("Error..... " + e.StackTrace);
 
         }
 
-        public bool queryService(string serviceTag,string teamName,string teamID)
+        public bool queryService(string serviceTag, string teamName, string teamID)
         {
             DRCstruct DRCtemp = new DRCstruct();
             SRVstruct SRVtemp = new SRVstruct();
@@ -250,14 +256,13 @@ errorMsg = string.Format("Error..... " + e.StackTrace);
 
         }
 
-        public bool execService(string serviceName , string numArgs , ARGstruct[] args)
+        public string execService(string teamID, string teamName, string serviceName, string numArgs, ARGstruct[] args)
         {
             Logger.Log("Executing a service ");
             DRCstruct DRCtemp = new DRCstruct();
             SRVstruct SRVtemp = new SRVstruct();
-            ARGstruct ARGtemp = new ARGstruct();
             HL7Builder tempHL = new HL7Builder();
-
+            string returner = "";
             string[] tempWords =
             {
                 "","","","","","","","","",""
@@ -265,8 +270,8 @@ errorMsg = string.Format("Error..... " + e.StackTrace);
 
 
             // Registerig the team fromt he service and all that 
-            DRCtemp.teamName = "WestNet";
-            DRCtemp.teamID = "1186";
+            DRCtemp.teamName = teamName;
+            DRCtemp.teamID = teamID;
 
             SRVtemp.serviceName = serviceName;
             SRVtemp.numARGS = numArgs;
@@ -281,7 +286,14 @@ errorMsg = string.Format("Error..... " + e.StackTrace);
 
 
             SOAtalking(tempWords);
-            return true;
+            if (PUBs.allGood == "NOT-OK")
+            {
+
+                returner += "ERROR code(" + PUBs.errorCode + ")  " + PUBs.errorMessage + "!";
+            }
+
+
+            return returner;
         }
         public bool publishService()
         {

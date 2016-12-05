@@ -16,6 +16,7 @@ namespace SOA1_C
         public Form1()
         {
             InitializeComponent();
+            Logger.startLogger();
 
         }
 

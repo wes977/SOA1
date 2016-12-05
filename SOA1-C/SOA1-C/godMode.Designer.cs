@@ -126,7 +126,8 @@
             this.serviceNameTB.Name = "serviceNameTB";
             this.serviceNameTB.Size = new System.Drawing.Size(284, 40);
             this.serviceNameTB.TabIndex = 7;
-            this.serviceNameTB.Text = "CAR-LOAN";
+            this.serviceNameTB.Text = "GIORP-TOTAL";
+            this.serviceNameTB.TextChanged += new System.EventHandler(this.serviceNameTB_TextChanged);
             // 
             // teamNameTB
             // 

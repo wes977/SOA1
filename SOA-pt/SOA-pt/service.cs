@@ -31,6 +31,7 @@ namespace SOA_pt
 
         public double getSubTotal()
         {
+            Math.Round(value, 1);
             return value;
         }
 
@@ -42,21 +43,27 @@ namespace SOA_pt
             {
                 case eProvince.PE:
                     pst = 0.1;
+                    returner = pst * (value + getGST());
                     break;
                 case eProvince.QC:
-                    pst = 0.95;
+                    pst = 0.095;
+                    returner = pst * (value + getGST());
                     break;
                 case eProvince.MB:
                     pst = 0.07;
+                    returner = pst * value;
                     break;
                 case eProvince.SK:
                     pst = 0.05;
+                    returner = pst * value;
                     break;
                 default:
                     pst = 0.0;
+                    returner = pst * value;
                     break;
             }
-            returner = pst * value;
+            
+            Math.Round(returner, 1);
             return returner;
         }
 
@@ -95,6 +102,7 @@ namespace SOA_pt
                     break;
             }
             returner = gst * value;
+            Math.Round(returner, 1);
             return returner;
         }
 
@@ -124,6 +132,7 @@ namespace SOA_pt
                     break;
             }
             returner = hst * value;
+            Math.Round(returner, 1);
             return returner;
         }
 
@@ -135,15 +144,16 @@ namespace SOA_pt
             switch (selectedProvince)
             {
                 case eProvince.PE:
-                    returner = (value + getGST()) + ((value + getGST()) * getPST());
+                    returner = (value + getGST()) + ((value + getGST()) * 0.1);
                     break;
                 case eProvince.QC:
-                    returner = (value + getGST()) + ((value + getGST()) * getPST());
+                    returner = (value + getGST()) + ((value + getGST()) * 0.095);
                     break;
                 default:
                     returner = value + getGST() + getPST() + getHST();
                     break;
             }
+            Math.Round(returner, 1);
             return returner;
         }
 
@@ -214,7 +224,7 @@ namespace SOA_pt
             counter = 0;
             foreach (string st in provincesABV)
             {
-                if (st.ToUpper() == provinceString)
+                if (st.ToUpper() == provinceString.ToUpper())
                 {
                     selectedProvince = (eProvince)counter;
                     returner = true;

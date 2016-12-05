@@ -17,5 +17,17 @@ namespace SOA1_C
                 sw.WriteLine(DateTime.Now + " : " + action);
             }
         }
+
+        public static void startLogger()
+        {
+
+            string action = "USER APP LOG \r\n Team WestNet (Wes Thompson , Alex Martin Niels Lindeboom , Jen Klimova)";
+            string path = @"C:\Users\wthompson2143\Desktop\ClientLogger.txt";
+            using (FileStream fs = new FileStream(path, FileMode.Append, FileAccess.Write))
+            using (StreamWriter sw = new StreamWriter(fs))
+            {
+                sw.WriteLine(DateTime.Now + " : " + action);
+            }
+        }
     }
 }

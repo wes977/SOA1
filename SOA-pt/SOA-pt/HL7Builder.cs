@@ -435,6 +435,9 @@ namespace SOA_pt
         private int BOMunicode = 11;
         private int EOSunicode = 13;
         private int EOMunicode = 28;
+
+        public string teamCode;
+        public string teamName;
         public DRCstruct DRCs = new DRCstruct();
         public INFstruct INFs = new INFstruct();
         public SOAstruct SOAs = new SOAstruct();
@@ -474,9 +477,9 @@ namespace SOA_pt
 
             switch (commandTypeNum)
             {
-                //case (int)commandType.DRC:
-                //    DRCcommand(values);
-                //    break;
+                case (int)commandType.DRC:
+                    DRCcommand(values);
+                    break;
                 case (int)commandType.INF:
                     INFcommand(values);
                     break;
@@ -522,6 +525,41 @@ namespace SOA_pt
             }
             return commandType.SOA;
         }
+
+        public string SOAerrorChecker()
+        {
+            string returner = "";
+            if (SOAs.allGood == "OK")
+            {
+                returner = "All Good in the hood Team ID" + SOAs.errorCode;
+                Console.WriteLine(returner);
+                teamCode = SOAs.errorCode;
+                teamName = SOAs.errorMessage;
+            }
+            else
+            {
+                returner = "ERROR (" + SOAs.errorCode + ") : " + SOAs.errorMessage;
+                Console.WriteLine(returner);
+            }
+            return returner;
+        }
+
+        public string PUBerrorChecker()
+        {
+            string returner = "";
+            if (PUBs.allGood == "OK")
+            {
+                returner = "All Good in the hood";
+                Console.WriteLine(returner);
+            }
+            else
+            {
+                returner = "ERROR (" + PUBs.errorCode + ") : " + PUBs.errorMessage;
+                Console.WriteLine(returner);
+            }
+            return returner;
+        }
+
 
         // DECONSTRUCTORS 
         private void DRCcommand(string[] inputValues)
