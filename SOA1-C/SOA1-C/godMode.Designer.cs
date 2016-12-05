@@ -42,11 +42,11 @@
             this.portTB = new System.Windows.Forms.TextBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.regTeambtn = new System.Windows.Forms.Button();
-            this.querybtn = new System.Windows.Forms.Button();
             this.execbtl = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.srvDescLBl = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.querybtn = new System.Windows.Forms.Button();
+            this.Errorlbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -117,7 +117,7 @@
             this.IPtb.Name = "IPtb";
             this.IPtb.Size = new System.Drawing.Size(232, 40);
             this.IPtb.TabIndex = 6;
-            this.IPtb.Text = "192.168.111.111";
+            this.IPtb.Text = "10.113.21.163";
             // 
             // serviceNameTB
             // 
@@ -155,23 +155,13 @@
             // regTeambtn
             // 
             this.regTeambtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.regTeambtn.Location = new System.Drawing.Point(523, 46);
+            this.regTeambtn.Location = new System.Drawing.Point(523, 5);
             this.regTeambtn.Name = "regTeambtn";
             this.regTeambtn.Size = new System.Drawing.Size(253, 40);
             this.regTeambtn.TabIndex = 13;
             this.regTeambtn.Text = "Register Team";
             this.regTeambtn.UseVisualStyleBackColor = true;
             this.regTeambtn.Click += new System.EventHandler(this.regTeambtn_Click);
-            // 
-            // querybtn
-            // 
-            this.querybtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.querybtn.Location = new System.Drawing.Point(523, 89);
-            this.querybtn.Name = "querybtn";
-            this.querybtn.Size = new System.Drawing.Size(253, 42);
-            this.querybtn.TabIndex = 14;
-            this.querybtn.Text = "Query";
-            this.querybtn.UseVisualStyleBackColor = true;
             // 
             // execbtl
             // 
@@ -204,16 +194,25 @@
             this.srvDescLBl.TabIndex = 17;
             this.srvDescLBl.Text = " ";
             // 
-            // button2
+            // querybtn
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(523, 5);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(253, 40);
-            this.button2.TabIndex = 19;
-            this.button2.Text = "Set Network";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.querybtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.querybtn.Location = new System.Drawing.Point(523, 89);
+            this.querybtn.Name = "querybtn";
+            this.querybtn.Size = new System.Drawing.Size(253, 42);
+            this.querybtn.TabIndex = 14;
+            this.querybtn.Text = "Query";
+            this.querybtn.UseVisualStyleBackColor = true;
+            this.querybtn.Click += new System.EventHandler(this.querybtn_Click);
+            // 
+            // Errorlbl
+            // 
+            this.Errorlbl.AutoSize = true;
+            this.Errorlbl.Location = new System.Drawing.Point(782, 9);
+            this.Errorlbl.Name = "Errorlbl";
+            this.Errorlbl.Size = new System.Drawing.Size(53, 13);
+            this.Errorlbl.TabIndex = 18;
+            this.Errorlbl.Text = "Message:";
             // 
             // SNbtn
             // 
@@ -221,7 +220,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.ClientSize = new System.Drawing.Size(1198, 747);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.Errorlbl);
             this.Controls.Add(this.srvDescLBl);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.execbtl);
@@ -259,10 +258,10 @@
         private System.Windows.Forms.TextBox portTB;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Button regTeambtn;
-        private System.Windows.Forms.Button querybtn;
         private System.Windows.Forms.Button execbtl;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label srvDescLBl;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button querybtn;
+        private System.Windows.Forms.Label Errorlbl;
     }
 }

@@ -25,8 +25,8 @@ namespace SOA1_C
         {
             InitializeComponent();
             int i = 0;
-            talker.regTeam();
-            talker.queryService("GIORP-TOTAL");
+            //talker.regTeam();
+            //talker.queryService("GIORP-TOTAL");
             foreach (ARGstruct arg in talker.tempHL.argList)
             {
                 Panel pan = new Panel();
@@ -88,7 +88,21 @@ namespace SOA1_C
 
         private void regTeambtn_Click(object sender, EventArgs e)
         {
-
+            talker.IP = IPtb.Text;
+            talker.port = Int32.Parse(portTB.Text);
+            talker.regTeam(teamNameTB.Text);
+            if ( "" == talker.tempHL.SOAerrorChecker())
+            {
+                if (talker.errorMsg != "")
+                {
+                    Errorlbl.Text = talker.errorMsg;
+                }
+              
+            }
+            else
+            {
+                Errorlbl.Text = talker.tempHL.SOAerrorChecker();
+            }
         }
 
         private void execbtl_Click(object sender, EventArgs e)
@@ -129,6 +143,23 @@ namespace SOA1_C
         {
             talker.IP = IPtb.Text;
             talker.port = Convert.ToInt32(portTB.Text);
+        }
+
+        private void querybtn_Click(object sender, EventArgs e)
+        {
+            talker.queryService(serviceNameTB.Text,teamNameTB.Text,talker.tempHL.teamCode);
+            if ("" == talker.tempHL.SOAerrorChecker())
+            {
+                if (talker.errorMsg != "")
+                {
+                    Errorlbl.Text = talker.errorMsg;
+                }
+
+            }
+            else
+            {
+                Errorlbl.Text = talker.tempHL.SOAerrorChecker();
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SOA1_C
     {
         private string _IP = "10.113.21.163";
         private int _Port = 3128;
-
+        public string errorMsg;
         public HL7Builder tempHL = new HL7Builder();
 
         public string IP
@@ -76,7 +76,9 @@ namespace SOA1_C
 
             catch (Exception e)
             {
-                returner += string.Format("Error..... " + e.StackTrace);
+                //returner += string.Format("Error..... " + e.StackTrace);
+errorMsg = string.Format("Error..... " + e.StackTrace);
+                returner = "";
             }
             return returner;
 
@@ -115,6 +117,8 @@ namespace SOA1_C
 
         public bool regTeam()
         {
+
+            Logger.Log("Registering a Team to the Registry ");
             DRCstruct DRCtemp = new DRCstruct();
             INFstruct INFtemp = new INFstruct();
             HL7Builder tempHL = new HL7Builder();
@@ -132,11 +136,31 @@ namespace SOA1_C
             SOAtalking(tempWords);
             return true;
         }
+
+        public bool regTeam(string newName)
+        {
+            DRCstruct DRCtemp = new DRCstruct();
+            INFstruct INFtemp = new INFstruct();
+            HL7Builder tempHL = new HL7Builder();
+            Logger.Log("Registering a Team to the Registry ");
+            string[] tempWords =
+            {
+                "","","","","","","","","",""
+            };
+
+
+            // Registerig the team fromt he service and all that 
+            INFtemp.teamName = newName;
+            tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.REG);
+            tempWords[1] = tempHL.INFBuilder(INFtemp);
+            SOAtalking(tempWords);
+            return true;
+        }
         public bool unregTeam()
         {
             DRCstruct DRCtemp = new DRCstruct();
             HL7Builder tempHL = new HL7Builder();
-
+            Logger.Log("Unregistrying a team ");
             string[] tempWords =
             {
                 ""
@@ -145,7 +169,7 @@ namespace SOA1_C
 
             // Registerig the team fromt he service and all that 
             DRCtemp.teamName = "WestNet";
-            DRCtemp.teamID = "1186";
+            DRCtemp.teamID = "1189";
             tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.UNREG);
 
             SOAtalking(tempWords);
@@ -153,6 +177,7 @@ namespace SOA1_C
         }
         public bool queryTeam(string teamName , string teamID,string serviceTag)
         {
+            Logger.Log("Querying a team ");
             DRCstruct DRCtemp = new DRCstruct();
             INFstruct INFtemp = new INFstruct();
             HL7Builder tempHL = new HL7Builder();
@@ -179,7 +204,7 @@ namespace SOA1_C
             DRCstruct DRCtemp = new DRCstruct();
             SRVstruct SRVtemp = new SRVstruct();
             HL7Builder tempHL = new HL7Builder();
-
+            Logger.Log("Querying a service ");
             string[] tempWords =
             {
                 "","","","","","","","","",""
@@ -200,8 +225,34 @@ namespace SOA1_C
 
         }
 
+        public bool queryService(string serviceTag,string teamName,string teamID)
+        {
+            DRCstruct DRCtemp = new DRCstruct();
+            SRVstruct SRVtemp = new SRVstruct();
+            HL7Builder tempHL = new HL7Builder();
+            Logger.Log("Querying a service ");
+            string[] tempWords =
+            {
+                "","","","","","","","","",""
+            };
+
+
+            // Registerig the team fromt he service and all that 
+            DRCtemp.teamName = teamName;
+            DRCtemp.teamID = teamID;
+            SRVtemp.teamName = serviceTag;
+
+
+            tempWords[0] = tempHL.DRCBuilder(DRCtemp, registryCommands.QUERY_SERVICE);
+            tempWords[1] = tempHL.SRVBuilder(SRVtemp);
+            SOAtalking(tempWords);
+            return true;
+
+        }
+
         public bool execService(string serviceName , string numArgs , ARGstruct[] args)
         {
+            Logger.Log("Executing a service ");
             DRCstruct DRCtemp = new DRCstruct();
             SRVstruct SRVtemp = new SRVstruct();
             ARGstruct ARGtemp = new ARGstruct();
@@ -234,6 +285,7 @@ namespace SOA1_C
         }
         public bool publishService()
         {
+            Logger.Log("Publiching a service ");
             bool returner = false;
             string[] tempWords =
             {

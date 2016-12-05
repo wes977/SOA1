@@ -30,10 +30,6 @@
         {
             this.form1Ttl = new System.Windows.Forms.Label();
             this.srvc1btn = new System.Windows.Forms.Button();
-            this.IPlbl = new System.Windows.Forms.Label();
-            this.portlbl = new System.Windows.Forms.Label();
-            this.iptb = new System.Windows.Forms.TextBox();
-            this.porttb = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // form1Ttl
@@ -56,47 +52,11 @@
             this.srvc1btn.UseVisualStyleBackColor = true;
             this.srvc1btn.Click += new System.EventHandler(this.srvc1btn_Click);
             // 
-            // IPlbl
-            // 
-            this.IPlbl.AutoSize = true;
-            this.IPlbl.Location = new System.Drawing.Point(12, 64);
-            this.IPlbl.Name = "IPlbl";
-            this.IPlbl.Size = new System.Drawing.Size(58, 13);
-            this.IPlbl.TabIndex = 2;
-            this.IPlbl.Text = "IP Address";
-            // 
-            // portlbl
-            // 
-            this.portlbl.AutoSize = true;
-            this.portlbl.Location = new System.Drawing.Point(12, 93);
-            this.portlbl.Name = "portlbl";
-            this.portlbl.Size = new System.Drawing.Size(29, 13);
-            this.portlbl.TabIndex = 3;
-            this.portlbl.Text = "Port:";
-            // 
-            // iptb
-            // 
-            this.iptb.Location = new System.Drawing.Point(77, 64);
-            this.iptb.Name = "iptb";
-            this.iptb.Size = new System.Drawing.Size(247, 20);
-            this.iptb.TabIndex = 4;
-            // 
-            // porttb
-            // 
-            this.porttb.Location = new System.Drawing.Point(77, 90);
-            this.porttb.Name = "porttb";
-            this.porttb.Size = new System.Drawing.Size(247, 20);
-            this.porttb.TabIndex = 5;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(340, 154);
-            this.Controls.Add(this.porttb);
-            this.Controls.Add(this.iptb);
-            this.Controls.Add(this.portlbl);
-            this.Controls.Add(this.IPlbl);
             this.Controls.Add(this.srvc1btn);
             this.Controls.Add(this.form1Ttl);
             this.Name = "Form1";
@@ -111,9 +71,5 @@
 
         private System.Windows.Forms.Label form1Ttl;
         private System.Windows.Forms.Button srvc1btn;
-        private System.Windows.Forms.Label IPlbl;
-        private System.Windows.Forms.Label portlbl;
-        private System.Windows.Forms.TextBox iptb;
-        private System.Windows.Forms.TextBox porttb;
     }
 }

@@ -51,8 +51,8 @@ namespace SOA1_C
 
             lOutputDataMembers.Add(temp3);
             lOutputDataMembers.Add(temp4);
-            talker.regTeam();
-            talker.queryService("GIORP-TOTAL");
+           // talker.regTeam();
+            //talker.queryService("GIORP-TOTAL");
             //temp.HLStringDebuilder("SOA|OK|||3|");
         }
 

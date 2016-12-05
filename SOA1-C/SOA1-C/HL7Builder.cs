@@ -435,6 +435,9 @@ namespace SOA1_C
         private int BOMunicode = 11;
         private int EOSunicode = 13;
         private int EOMunicode = 28;
+        public string teamCode;
+        public string teamName;
+        public string errorMesg;
         public DRCstruct DRCs = new DRCstruct();
         public INFstruct INFs = new INFstruct();
         public SOAstruct SOAs = new SOAstruct();
@@ -517,9 +520,40 @@ namespace SOA1_C
 
             foreach (string l in lines)
             {
+                Logger.Log(l);
                 HLStringDebuilder(l);
             }
-            return commandType.SOA; 
+            return commandType.SOA;
+        }
+
+        public string SOAerrorChecker()
+        {
+            string returner = "";
+            if (SOAs.allGood == "OK")
+            {
+                returner = "All Good in the hood Team ID" + SOAs.errorCode;
+                teamCode = SOAs.errorCode;
+                teamName = SOAs.errorMessage;
+            }
+            else
+            {
+                returner = "ERROR (" + SOAs.errorCode + ") : " + SOAs.errorMessage;
+            }
+            return returner;
+        }
+
+        public string PUBerrorChecker()
+        {
+            string returner = "";
+            if (PUBs.allGood == "OK")
+            {
+                returner = "All Good in the hood";
+            }
+            else
+            {
+                returner = "ERROR (" + PUBs.errorCode + ") : " + PUBs.errorMessage;
+            }
+            return returner;
         }
 
         // DECONSTRUCTORS 
@@ -549,7 +583,6 @@ namespace SOA1_C
         }
         private void SOAcommand(string[] inputValues)
         {
-
 
             SOAs.allGood = inputValues[1];
             SOAs.errorCode = inputValues[2];
@@ -603,48 +636,56 @@ namespace SOA1_C
         {
             string cmd = "";
             cmd = string.Format("DRC|{0}|{1}|{2}|", aRegistryCommands[(int)command], builder.teamName, builder.teamID);
+            Logger.Log(cmd);
             return cmd;
         }
         public string INFBuilder(INFstruct builder)
         {
             string cmd = "";
             cmd = string.Format("INF|{0}|{1}|{2}|", builder.teamName, builder.teamID, builder.serviceTag);
+            Logger.Log(cmd);
             return cmd;
         }
         public string SOABuilder(SOAstruct builder)
         {
             string cmd = "";
             cmd = string.Format("SOA|{0}|{1}|{2}|{3}|", builder.allGood, builder.errorCode, builder.errorMessage, builder.numSegments);
+            Logger.Log(cmd);
             return cmd;
         }
         public string SRVBuilder(SRVstruct builder)
         {
             string cmd = "";
             cmd = string.Format("SRV|{0}|{1}|{2}|{3}|{4}|{5}|", builder.teamName, builder.serviceName, builder.securityLevel, builder.numARGS, builder.numResponses, builder.description);
+            Logger.Log(cmd);
             return cmd;
         }
         public string ARGBuilder(ARGstruct builder)
         {
             string cmd = "";
             cmd = string.Format("ARG|{0}|{1}|{2}|{3}|{4}|", builder.argPosition, builder.argName, builder.argDataType, builder.argManOpt, builder.value);
+            Logger.Log(cmd);
             return cmd;
         }
         public string MCHBuilder(MCHstruct builder)
         {
             string cmd = "";
             cmd = string.Format("MCH|{0}|{1}|", builder.IP, builder.port);
+            Logger.Log(cmd);
             return cmd;
         }
         public string RSPBuilder(RSPstruct builder)
         {
             string cmd = "";
             cmd = string.Format("RSP|{0}|{1}|{2}|{3}|", builder.position, builder.name, builder.DataType, builder.value);
+            Logger.Log(cmd);
             return cmd;
         }
         public string PUBBuilder(PUBstruct builder)
         {
             string cmd = "";
             cmd = string.Format("PUB|{0}|{1}|{2}|{3}|", builder.allGood, builder.errorCode, builder.errorMessage, builder.numSegments);
+            Logger.Log(cmd);
             return cmd;
         }
     }

@@ -26,6 +26,8 @@ namespace SOA1_C
 
         private void srvc1btn_Click(object sender, EventArgs e)
         {
+
+            Logger.Log("Client Started!");
             (new SNbtn()).Show();
             this.Hide();
         }
