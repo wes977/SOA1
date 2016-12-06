@@ -114,6 +114,7 @@ namespace SOA_pt
                 {
                     returner += Convert.ToChar(bb[i]);
                 }
+                Logger.Log("Response \r\n " + returner);
                 tcpclnt.Close();
             }
 
@@ -264,7 +265,7 @@ namespace SOA_pt
             {
                 "","","","","","","","","",""
             };
-
+            Logger.Log(">> QUERYING TEAM");
 
             // Registerig the team fromt he service and all that 
             DRCtemp.teamName = teamName;

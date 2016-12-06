@@ -145,8 +145,11 @@ namespace SOA_pt
                             if (srvtemp.setValue(stringBuilder.argList[1].value))
 
                             {
+                                Logger.Log("SENDING A RESPONSE");
                                 PUBs.allGood = "OK";
-                                PUBs.numSegments = "6";
+                                PUBs.numSegments = "7";
+                                PUBs.errorMessage = "";
+                                PUBs.errorCode = "";
                                 words[0] = stringBuilder.PUBBuilder(PUBs);
 
                                 RSPs.position = "1";
@@ -181,6 +184,7 @@ namespace SOA_pt
                             }
                             else
                             {
+                                Logger.Log("BAD value inputed from user");
                                 PUBs.allGood = "NOT-OK";
                                 PUBs.errorCode = "69";
                                 PUBs.errorMessage = "Bad Value could  not work with";
@@ -189,6 +193,7 @@ namespace SOA_pt
                         }
                         else
                         {
+                            Logger.Log("BAD province inputed from user");
                             PUBs.allGood = "NOT-OK";
                             PUBs.errorCode = "70";
                             PUBs.errorMessage = "Bad province could  not work with";
@@ -221,6 +226,7 @@ namespace SOA_pt
 
                     ASCIIEncoding asen = new ASCIIEncoding();
                     s.Send(asen.GetBytes(allWords));
+                    Logger.Log("Sent REsponse");
                     s.Close();
                     myList.Stop();
 

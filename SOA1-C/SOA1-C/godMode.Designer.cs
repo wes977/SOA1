@@ -47,6 +47,7 @@
             this.srvDescLBl = new System.Windows.Forms.Label();
             this.querybtn = new System.Windows.Forms.Button();
             this.Errorlbl = new System.Windows.Forms.Label();
+            this.teamIDtb = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
@@ -93,7 +94,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(204, 167);
+            this.label5.Location = new System.Drawing.Point(12, 179);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(84, 33);
             this.label5.TabIndex = 4;
@@ -104,7 +105,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(844, 167);
+            this.label6.Location = new System.Drawing.Point(595, 179);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(108, 33);
             this.label6.TabIndex = 5;
@@ -167,7 +168,7 @@
             // execbtl
             // 
             this.execbtl.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.execbtl.Location = new System.Drawing.Point(343, 693);
+            this.execbtl.Location = new System.Drawing.Point(18, 568);
             this.execbtl.Name = "execbtl";
             this.execbtl.Size = new System.Drawing.Size(253, 42);
             this.execbtl.TabIndex = 15;
@@ -209,18 +210,31 @@
             // Errorlbl
             // 
             this.Errorlbl.AutoSize = true;
-            this.Errorlbl.Location = new System.Drawing.Point(782, 9);
+            this.Errorlbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Errorlbl.ForeColor = System.Drawing.Color.Red;
+            this.Errorlbl.Location = new System.Drawing.Point(13, 540);
             this.Errorlbl.Name = "Errorlbl";
-            this.Errorlbl.Size = new System.Drawing.Size(53, 13);
+            this.Errorlbl.Size = new System.Drawing.Size(114, 25);
             this.Errorlbl.TabIndex = 18;
             this.Errorlbl.Text = "Message:";
+            this.Errorlbl.Click += new System.EventHandler(this.Errorlbl_Click);
+            // 
+            // teamIDtb
+            // 
+            this.teamIDtb.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.teamIDtb.Location = new System.Drawing.Point(523, 46);
+            this.teamIDtb.Name = "teamIDtb";
+            this.teamIDtb.Size = new System.Drawing.Size(135, 40);
+            this.teamIDtb.TabIndex = 19;
+            this.teamIDtb.Text = "0000";
             // 
             // SNbtn
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.ClientSize = new System.Drawing.Size(1198, 747);
+            this.ClientSize = new System.Drawing.Size(805, 615);
+            this.Controls.Add(this.teamIDtb);
             this.Controls.Add(this.Errorlbl);
             this.Controls.Add(this.srvDescLBl);
             this.Controls.Add(this.label7);
@@ -264,5 +278,6 @@
         private System.Windows.Forms.Label srvDescLBl;
         private System.Windows.Forms.Button querybtn;
         private System.Windows.Forms.Label Errorlbl;
+        private System.Windows.Forms.TextBox teamIDtb;
     }
 }

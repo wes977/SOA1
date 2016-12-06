@@ -115,6 +115,7 @@ namespace SOA1_C
                     returner += Convert.ToChar(bb[i]);
                 }
                 tcpclnt.Close();
+                Logger.Log("Response \r\n ");
             }
 
             catch (Exception e)

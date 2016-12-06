@@ -144,6 +144,7 @@ namespace SOA1_C
             talker.IP = IPtb.Text;
             talker.port = Int32.Parse(portTB.Text);
             talker.regTeam(teamNameTB.Text);
+            teamIDtb.Text = talker.tempHL.SOAs.errorCode;
             if ( "" == talker.tempHL.SOAerrorChecker())
             {
                 if (talker.errorMsg != "")
@@ -184,7 +185,7 @@ namespace SOA1_C
             aARGs[0].value = inputs[0];
             aARGs[1].value = inputs[1];
 
-            string errorMes = servicetalker.execService(talker.tempHL.teamCode,teamNameTB.Text,talker.tempHL.SRVs.serviceName, talker.tempHL.SRVs.numARGS, aARGs);
+            string errorMes = servicetalker.execService(teamIDtb.Text,teamNameTB.Text,talker.tempHL.SRVs.serviceName, talker.tempHL.SRVs.numARGS, aARGs);
             if (errorMes == "")
             {
                 Errorlbl.Text = errorMes;
@@ -244,7 +245,7 @@ namespace SOA1_C
         private void querybtn_Click(object sender, EventArgs e)
         {
             talker.queryService(serviceNameTB.Text,teamNameTB.Text,talker.tempHL.teamCode);
-
+            argTBs.Clear();
             string IDK = talker.tempHL.MCHs.IP;
             int i = 0;
             foreach (ARGstruct arg in talker.tempHL.argList)
@@ -267,6 +268,7 @@ namespace SOA1_C
                 i++;
             }
             fillInputAndOutput();
+            
             if ("" == talker.tempHL.SOAerrorChecker())
             {
                 if (talker.errorMsg != "")
@@ -291,6 +293,11 @@ namespace SOA1_C
         ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void serviceNameTB_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Errorlbl_Click(object sender, EventArgs e)
         {
 
         }
