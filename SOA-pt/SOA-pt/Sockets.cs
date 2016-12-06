@@ -1,4 +1,12 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////
+// file:	sockets.cs
+//
+// summary:	Implements the sockets class
+// 
+//  TEAM : WES , JEN, Niels , Alex
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,23 +17,50 @@ using System.Net.Sockets;
 using System.Configuration;
 namespace SOA_pt
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A sockets. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     class Sockets
     {
+        /// <summary>   The IP. </summary>
         private string _sIP;
+        /// <summary>   The port. </summary>
         private int _port;
 
+        /// <summary>   True to run socket. </summary>
         public bool runSocket;
+        /// <summary>   The string builder. </summary>
         HL7Builder stringBuilder = new HL7Builder();
+        /// <summary>   The dr create struct. </summary>
         public DRCstruct DRCs = new DRCstruct();
+        /// <summary>   The in file system. </summary>
         public INFstruct INFs = new INFstruct();
+        /// <summary>   The so as. </summary>
         public SOAstruct SOAs = new SOAstruct();
+        /// <summary>   The sr vs. </summary>
         public SRVstruct SRVs = new SRVstruct();
+        /// <summary>   The archive gs. </summary>
         public ARGstruct ARGs = new ARGstruct();
+        /// <summary>   The mc hs. </summary>
         public MCHstruct MCHs = new MCHstruct();
+        /// <summary>   The RS ps. </summary>
         public RSPstruct RSPs = new RSPstruct();
+        /// <summary>   The pu bs. </summary>
         public PUBstruct PUBs = new PUBstruct();
+        /// <summary>   The srvtemp. </summary>
         service srvtemp = new service();
+        /// <summary>   The so atalker. </summary>
         SOATalker SOAtalker = new SOATalker();
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the IP. </summary>
+        ///
+        /// <value> The s IP. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string sIP
         {
             get
@@ -38,6 +73,12 @@ namespace SOA_pt
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the port. </summary>
+        ///
+        /// <value> The port. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public int port
         {
             get
@@ -49,6 +90,15 @@ namespace SOA_pt
                 _port = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Starts a socket. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="teamID">   Identifier for the team. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public void startSocket(string teamID)
         {
             runSocket = true;

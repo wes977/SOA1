@@ -1,4 +1,12 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////
+// file:	service.cs
+//
+// summary:	Implements the service class
+// 
+//  TEAM : WES , JEN, Niels , Alex
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,34 +14,76 @@ using System.Threading.Tasks;
 
 namespace SOA_pt
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   Values that represent provinces. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     enum eProvince
     {
+        /// <summary>   An enum constant representing the Newline option. </summary>
         NL = 0,
+        /// <summary>   An enum constant representing the ns option. </summary>
         NS,
+        /// <summary>   An enum constant representing the nb option. </summary>
         NB,
+        /// <summary>   An enum constant representing the pe option. </summary>
         PE,
+        /// <summary>   An enum constant representing the qc option. </summary>
         QC,
+        /// <summary>   An enum constant representing the on option. </summary>
         ON,
+        /// <summary>   An enum constant representing the Megabytes option. </summary>
         MB,
+        /// <summary>   An enum constant representing the sk option. </summary>
         SK,
+        /// <summary>   An enum constant representing the ab option. </summary>
         AB,
+        /// <summary>   An enum constant representing the bc option. </summary>
         BC,
+        /// <summary>   An enum constant representing the yt option. </summary>
         YT,
+        /// <summary>   An enum constant representing the NT option. </summary>
         NT,
+        /// <summary>   An enum constant representing the nu option. </summary>
         NU
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A service. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     class service
     {
+        /// <summary>   The selected province. </summary>
         private eProvince selectedProvince;
+        /// <summary>   The value. </summary>
         private double value;
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets sub total. </summary>
+        ///
+        ///  
+        ///
+        /// <returns>   The sub total. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public double getSubTotal()
         {
             Math.Round(value, 1);
             return value;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the pst. </summary>
+        ///
+        ///  
+        ///
+        /// <returns>   The pst. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public double getPST()
         {
@@ -66,6 +116,14 @@ namespace SOA_pt
             Math.Round(returner, 1);
             return returner;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the gst. </summary>
+        ///
+        ///  
+        ///
+        /// <returns>   The gst. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public double getGST()
         {
@@ -106,6 +164,14 @@ namespace SOA_pt
             return returner;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the hst. </summary>
+        ///
+        ///  
+        ///
+        /// <returns>   The hst. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public double getHST()
         {
             double hst = 0;
@@ -136,6 +202,13 @@ namespace SOA_pt
             return returner;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the total. </summary>
+        ///
+        ///  
+        ///
+        /// <returns>   The total. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public double getTotal()
         {
@@ -157,6 +230,16 @@ namespace SOA_pt
             return returner;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Sets a value. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="valueString">  The value string. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public bool setValue(string valueString)
         {
             bool returner = false;
@@ -173,8 +256,23 @@ namespace SOA_pt
             {
                 returner = false;
             }
+
+            if (value < 0 )
+            {
+                returner = false;
+            }
             return returner;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Sets a province. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="provinceString">   The province string. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public bool setProvince(string provinceString)
         {

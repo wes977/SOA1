@@ -1,4 +1,12 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////
+// file:	godmode.cs
+//
+// summary:	Implements the godmode class
+// 
+//  TEAM : WES , JEN, Niels , Alex
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,17 +18,38 @@ using System.Windows.Forms;
 
 namespace SOA1_C
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A nbtn. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public partial class SNbtn : Form
     {
 
+        /// <summary>   The input data members. </summary>
         private List<DataMembers> lInputDataMembers = new List<DataMembers>();
+        /// <summary>   The output data members. </summary>
         private List<DataMembers> lOutputDataMembers = new List<DataMembers>();
+        /// <summary>   The ls. </summary>
         List<Panel> ls = new List<Panel>();
+        /// <summary>   The temporary. </summary>
         HL7Builder temp = new HL7Builder();
+        /// <summary>   The talker. </summary>
         SOATalker talker = new SOATalker();
+        /// <summary>   The servicetalker. </summary>
         SOATalker servicetalker = new SOATalker();
+        /// <summary>   The rsp t bs. </summary>
         List<TextBox> rspTBs = new List<TextBox>();
+        /// <summary>   The argument bs. </summary>
         List<TextBox> argTBs = new List<TextBox>();
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Default constructor. </summary>
+        ///
+        ///  
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public SNbtn()
         {
             InitializeComponent();
@@ -48,6 +77,12 @@ namespace SOA1_C
             }
             fillInputAndOutput();
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Fill input and output. </summary>
+        ///
+        ///  
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void fillInputAndOutput()
         {
@@ -81,10 +116,28 @@ namespace SOA1_C
 
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Event handler. Called by label5 for click events. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="sender">   Source of the event. </param>
+        /// <param name="e">        Event information. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void label5_Click(object sender, EventArgs e)
         {
 
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Event handler. Called by regTeambtn for click events. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="sender">   Source of the event. </param>
+        /// <param name="e">        Event information. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void regTeambtn_Click(object sender, EventArgs e)
         {
@@ -104,6 +157,15 @@ namespace SOA1_C
                 Errorlbl.Text = talker.tempHL.SOAerrorChecker();
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Event handler. Called by execbtl for click events. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="sender">   Source of the event. </param>
+        /// <param name="e">        Event information. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void execbtl_Click(object sender, EventArgs e)
         {
@@ -141,9 +203,28 @@ namespace SOA1_C
             else
             {
                 Errorlbl.Text = errorMes;
+                int q = 0;
+                foreach (TextBox textB in rspTBs)
+                {
+                    textB.Text = "ERROR";
+                    q++;
+                    if (q == 5)
+                    {
+                        break;
+                    }
+                }
             }
 
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Event handler. Called by button2 for click events. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="sender">   Source of the event. </param>
+        /// <param name="e">        Event information. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void button2_Click(object sender, EventArgs e)
         {
@@ -151,9 +232,20 @@ namespace SOA1_C
             talker.port = Convert.ToInt32(portTB.Text);
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Event handler. Called by querybtn for click events. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="sender">   Source of the event. </param>
+        /// <param name="e">        Event information. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void querybtn_Click(object sender, EventArgs e)
         {
             talker.queryService(serviceNameTB.Text,teamNameTB.Text,talker.tempHL.teamCode);
+
+            string IDK = talker.tempHL.MCHs.IP;
             int i = 0;
             foreach (ARGstruct arg in talker.tempHL.argList)
             {
@@ -188,6 +280,15 @@ namespace SOA1_C
                 Errorlbl.Text = talker.tempHL.SOAerrorChecker();
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Event handler. Called by serviceNameTB for text changed events. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="sender">   Source of the event. </param>
+        /// <param name="e">        Event information. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         private void serviceNameTB_TextChanged(object sender, EventArgs e)
         {

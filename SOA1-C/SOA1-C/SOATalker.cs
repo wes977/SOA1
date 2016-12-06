@@ -1,4 +1,12 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////
+// file:	soatalker.cs
+//
+// summary:	Implements the soatalker class
+// 
+//  TEAM : WES , JEN, Niels , Alex
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,23 +16,58 @@ using System.Net.Sockets;
 using System.IO;
 namespace SOA1_C
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A soa talker. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     class SOATalker
     {
-        private string _IP = "10.113.21.163";
+        /// <summary>   The IP. </summary>
+        private string _IP = "";
+        /// <summary>   The port. </summary>
         private int _Port = 3128;
+        /// <summary>   Message describing the error. </summary>
         public string errorMsg;
+        /// <summary>   The temporary hl. </summary>
         public HL7Builder tempHL = new HL7Builder();
+        /// <summary>   The pu bs. </summary>
         public PUBstruct PUBs = new PUBstruct();
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the IP. </summary>
+        ///
+        /// <value> The IP. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string IP
         {
             get { return _IP; }
             set { _IP = value; }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the port. </summary>
+        ///
+        /// <value> The port. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public int port
         {
             get { return _Port; }
             set { _Port = value; }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Talk to soa. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="words">    The words. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public string talkToSOA(string[] words)
         {
@@ -84,6 +127,17 @@ namespace SOA1_C
             return returner;
 
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   So atalking. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="things">   The things. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public bool SOAtalking(string[] things)
         {
             bool returner = false;
@@ -120,6 +174,13 @@ namespace SOA1_C
             return returner;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Registers the team described by newName. </summary>
+        ///
+        ///  
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public bool regTeam()
         {
@@ -143,6 +204,16 @@ namespace SOA1_C
             return true;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Registers the team described by newName. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="newName">  Name of the new. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public bool regTeam(string newName)
         {
             DRCstruct DRCtemp = new DRCstruct();
@@ -162,6 +233,15 @@ namespace SOA1_C
             SOAtalking(tempWords);
             return true;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Determines if we can unreg team. </summary>
+        ///
+        ///  
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public bool unregTeam()
         {
             DRCstruct DRCtemp = new DRCstruct();
@@ -181,6 +261,19 @@ namespace SOA1_C
             SOAtalking(tempWords);
             return true;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Queries a team. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="teamName">     Name of the team. </param>
+        /// <param name="teamID">       Identifier for the team. </param>
+        /// <param name="serviceTag">   The service tag. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public bool queryTeam(string teamName, string teamID, string serviceTag)
         {
             Logger.Log("Querying a team ");
@@ -205,6 +298,17 @@ namespace SOA1_C
             SOAtalking(tempWords);
             return true;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Queries a service. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="serviceTag">   The service tag. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public bool queryService(string serviceTag)
         {
             DRCstruct DRCtemp = new DRCstruct();
@@ -231,6 +335,18 @@ namespace SOA1_C
 
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Queries a service. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="serviceTag">   The service tag. </param>
+        /// <param name="teamName">     Name of the team. </param>
+        /// <param name="teamID">       Identifier for the team. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public bool queryService(string serviceTag, string teamName, string teamID)
         {
             DRCstruct DRCtemp = new DRCstruct();
@@ -255,6 +371,20 @@ namespace SOA1_C
             return true;
 
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Executes the service operation. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="teamID">       Identifier for the team. </param>
+        /// <param name="teamName">     Name of the team. </param>
+        /// <param name="serviceName">  Name of the service. </param>
+        /// <param name="numArgs">      Number of arguments. </param>
+        /// <param name="args">         The arguments. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public string execService(string teamID, string teamName, string serviceName, string numArgs, ARGstruct[] args)
         {
@@ -295,6 +425,15 @@ namespace SOA1_C
 
             return returner;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Determines if we can publish service. </summary>
+        ///
+        ///  
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public bool publishService()
         {
             Logger.Log("Publiching a service ");

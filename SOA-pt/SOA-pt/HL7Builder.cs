@@ -1,4 +1,12 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////
+// file:	hl7builder.cs
+//
+// summary:	Implements the hl 7builder class
+// 
+//  TEAM : WES , JEN, Niels , Alex
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,36 +15,85 @@ using System.Text.RegularExpressions;
 
 namespace SOA_pt
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   Values that represent command types. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     enum commandType
     {
+        /// <summary>   An enum constant representing the drc option. </summary>
         DRC = 0,
+        /// <summary>   An enum constant representing the inf option. </summary>
         INF = 1,
+        /// <summary>   An enum constant representing the soa option. </summary>
         SOA = 2,
+        /// <summary>   An enum constant representing the Server option. </summary>
         SRV,
+        /// <summary>   An enum constant representing the Argument option. </summary>
         ARG,
+        /// <summary>   An enum constant representing the mch option. </summary>
         MCH,
+        /// <summary>   An enum constant representing the rsp option. </summary>
         RSP,
+        /// <summary>   An enum constant representing the pub option. </summary>
         PUB
 
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   Values that represent registry commands. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     enum registryCommands
     {
+        /// <summary>   An enum constant representing the Register option. </summary>
         REG = 0,
+        /// <summary>   An enum constant representing the unreg option. </summary>
         UNREG,
+        /// <summary>   An enum constant representing the query option. </summary>
         QUERY,
+        /// <summary>   An enum constant representing the pub service option. </summary>
         PUB_SERVICE,
+        /// <summary>   An enum constant representing the query service option. </summary>
         QUERY_SERVICE,
+        /// <summary>   An enum constant representing the Execute service option. </summary>
         EXEC_SERVICE
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   Values that represent errors. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     enum ERRORS
     {
 
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A dr cstruct. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     struct DRCstruct
     {
+        /// <summary>   Name of the team. </summary>
         private string _teamName;
+        /// <summary>   Identifier for the team. </summary>
         private string _teamID;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the name of the team. </summary>
+        ///
+        /// <value> The name of the team. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string teamName
         {
             get
@@ -48,6 +105,13 @@ namespace SOA_pt
                 _teamName = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the identifier of the team. </summary>
+        ///
+        /// <value> The identifier of the team. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string teamID
         {
             get
@@ -60,11 +124,28 @@ namespace SOA_pt
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   An in fstruct. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     struct INFstruct
     {
+        /// <summary>   Name of the team. </summary>
         private string _teamName;
+        /// <summary>   Identifier for the team. </summary>
         private string _teamID;
+        /// <summary>   The service tag. </summary>
         private string _serviceTag;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the name of the team. </summary>
+        ///
+        /// <value> The name of the team. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string teamName
         {
             get
@@ -76,6 +157,13 @@ namespace SOA_pt
                 _teamName = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the identifier of the team. </summary>
+        ///
+        /// <value> The identifier of the team. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string teamID
         {
             get
@@ -87,6 +175,13 @@ namespace SOA_pt
                 _teamID = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the service tag. </summary>
+        ///
+        /// <value> The service tag. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string serviceTag
         {
             get
@@ -99,12 +194,30 @@ namespace SOA_pt
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A so astruct. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     struct SOAstruct
     {
+        /// <summary>   all good. </summary>
         private string _allGood;
+        /// <summary>   The error code. </summary>
         private string _errorCode;
+        /// <summary>   Message describing the error. </summary>
         private string _errorMessage;
+        /// <summary>   Number of segments. </summary>
         private string _numSegments;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets all good. </summary>
+        ///
+        /// <value> all good. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string allGood
         {
             get
@@ -116,6 +229,13 @@ namespace SOA_pt
                 _allGood = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the error code. </summary>
+        ///
+        /// <value> The error code. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string errorCode
         {
             get
@@ -127,6 +247,13 @@ namespace SOA_pt
                 _errorCode = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets a message describing the error. </summary>
+        ///
+        /// <value> A message describing the error. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string errorMessage
         {
             get
@@ -138,6 +265,13 @@ namespace SOA_pt
                 _errorMessage = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the number of segments. </summary>
+        ///
+        /// <value> The total number of segments. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string numSegments
         {
             get
@@ -150,14 +284,33 @@ namespace SOA_pt
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A sr vstruct. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     struct SRVstruct
     {
+        /// <summary>   Name of the team. </summary>
         private string _teamName;
+        /// <summary>   Name of the service. </summary>
         private string _serviceName;
+        /// <summary>   The security level. </summary>
         private string _securityLevel;
+        /// <summary>   Number of the rgs. </summary>
         private string _numARGS;
+        /// <summary>   Number of responses. </summary>
         private string _numResponses;
+        /// <summary>   The description. </summary>
         private string _description;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the name of the team. </summary>
+        ///
+        /// <value> The name of the team. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public string teamName
         {
@@ -170,6 +323,13 @@ namespace SOA_pt
                 _teamName = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the name of the service. </summary>
+        ///
+        /// <value> The name of the service. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string serviceName
         {
             get
@@ -181,6 +341,13 @@ namespace SOA_pt
                 _serviceName = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the security level. </summary>
+        ///
+        /// <value> The security level. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string securityLevel
         {
             get
@@ -193,6 +360,12 @@ namespace SOA_pt
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the number of the rgs. </summary>
+        ///
+        /// <value> The total number of the rgs. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string numARGS
         {
             get
@@ -204,6 +377,13 @@ namespace SOA_pt
                 _numARGS = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the number of responses. </summary>
+        ///
+        /// <value> The total number of responses. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string numResponses
         {
             get
@@ -215,6 +395,12 @@ namespace SOA_pt
                 _numResponses = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the description. </summary>
+        ///
+        /// <value> The description. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public string description
         {
@@ -228,13 +414,32 @@ namespace SOA_pt
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   An archive gstruct. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     struct ARGstruct
     {
+        /// <summary>   The argument position. </summary>
         private string _argPosition;
+        /// <summary>   Name of the argument. </summary>
         private string _argName;
+        /// <summary>   Type of the argument data. </summary>
         private string _argDataType;
+        /// <summary>   The argument manager option. </summary>
         private string _argManOpt;
+        /// <summary>   The value. </summary>
         private string _value;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the argument position. </summary>
+        ///
+        /// <value> The argument position. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string argPosition
         {
             get
@@ -246,6 +451,13 @@ namespace SOA_pt
                 _argPosition = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the name of the argument. </summary>
+        ///
+        /// <value> The name of the argument. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string argName
         {
             get
@@ -257,6 +469,13 @@ namespace SOA_pt
                 _argName = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the type of the argument data. </summary>
+        ///
+        /// <value> The type of the argument data. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string argDataType
         {
             get
@@ -268,6 +487,13 @@ namespace SOA_pt
                 _argDataType = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the argument manager option. </summary>
+        ///
+        /// <value> The argument manager option. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string argManOpt
         {
             get
@@ -279,6 +505,13 @@ namespace SOA_pt
                 _argManOpt = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the value. </summary>
+        ///
+        /// <value> The value. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string value
         {
             get
@@ -292,10 +525,26 @@ namespace SOA_pt
         }
 
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A mc hstruct. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     struct MCHstruct
     {
+        /// <summary>   The IP. </summary>
         private string _IP;
+        /// <summary>   The port. </summary>
         private string _port;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the port. </summary>
+        ///
+        /// <value> The port. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string port
         {
             get
@@ -307,6 +556,13 @@ namespace SOA_pt
                 _port = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the IP. </summary>
+        ///
+        /// <value> The IP. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string IP
         {
             get
@@ -319,12 +575,30 @@ namespace SOA_pt
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   The RS pstruct. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     struct RSPstruct
     {
+        /// <summary>   The position. </summary>
         private string _position;
+        /// <summary>   The name. </summary>
         private string _name;
+        /// <summary>   Type of the data. </summary>
         private string _DataType;
+        /// <summary>   The value. </summary>
         private string _value;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the position. </summary>
+        ///
+        /// <value> The position. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string position
         {
             get
@@ -336,6 +610,13 @@ namespace SOA_pt
                 _position = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the name. </summary>
+        ///
+        /// <value> The name. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string name
         {
             get
@@ -347,6 +628,13 @@ namespace SOA_pt
                 _name = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the type of the data. </summary>
+        ///
+        /// <value> The type of the data. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string DataType
         {
             get
@@ -358,6 +646,13 @@ namespace SOA_pt
                 _DataType = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the value. </summary>
+        ///
+        /// <value> The value. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string value
         {
             get
@@ -370,13 +665,29 @@ namespace SOA_pt
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A pu bstruct. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     struct PUBstruct
     {
+        /// <summary>   all good. </summary>
         private string _allGood;
+        /// <summary>   The error code. </summary>
         private string _errorCode;
+        /// <summary>   Message describing the error. </summary>
         private string _errorMessage;
+        /// <summary>   Number of segments. </summary>
         private string _numSegments;
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets all good. </summary>
+        ///
+        /// <value> all good. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public string allGood
         {
@@ -389,6 +700,13 @@ namespace SOA_pt
                 _allGood = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the error code. </summary>
+        ///
+        /// <value> The error code. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string errorCode
         {
             get
@@ -400,6 +718,13 @@ namespace SOA_pt
                 _errorCode = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets a message describing the error. </summary>
+        ///
+        /// <value> A message describing the error. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string errorMessage
         {
             get
@@ -411,6 +736,13 @@ namespace SOA_pt
                 _errorMessage = value;
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets or sets the number of segments. </summary>
+        ///
+        /// <value> The total number of segments. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string numSegments
         {
             get
@@ -424,35 +756,83 @@ namespace SOA_pt
         }
     }
 
-    //builder 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   builder. </summary>
+    ///
+    ///  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
     class HL7Builder
     {
 
+        /// <summary>   The separating character. </summary>
         char separatingChar = '|';
+        /// <summary>   List of types of the commands. </summary>
         private string[] aCommandTypes = { "DRC", "INF", "SOA", "SRV", "ARG", "MCH", "RSP", "PUB" };
+        /// <summary>   The registry commands. </summary>
         private string[] aRegistryCommands = { "REG-TEAM", "UNREG-TEAM", "QUERY-TEAM", "PUB-SERVICE", "QUERY-SERVICE", "EXEC-SERVICE" };
+        /// <summary>   The message. </summary>
         private string message;
+        /// <summary>   The bo municode. </summary>
         private int BOMunicode = 11;
+        /// <summary>   The eo sunicode. </summary>
         private int EOSunicode = 13;
+        /// <summary>   The eo municode. </summary>
         private int EOMunicode = 28;
 
+        /// <summary>   The team code. </summary>
         public string teamCode;
+        /// <summary>   Name of the team. </summary>
         public string teamName;
+        /// <summary>   The dr create struct. </summary>
         public DRCstruct DRCs = new DRCstruct();
+        /// <summary>   The in file system. </summary>
         public INFstruct INFs = new INFstruct();
+        /// <summary>   The so as. </summary>
         public SOAstruct SOAs = new SOAstruct();
+        /// <summary>   The sr vs. </summary>
         public SRVstruct SRVs = new SRVstruct();
+        /// <summary>   The archive gs. </summary>
         public ARGstruct ARGs = new ARGstruct();
+        /// <summary>   The mc hs. </summary>
         public MCHstruct MCHs = new MCHstruct();
+        /// <summary>   The RS ps. </summary>
         public RSPstruct RSPs = new RSPstruct();
+        /// <summary>   The pu bs. </summary>
         public PUBstruct PUBs = new PUBstruct();
+        /// <summary>   List of arguments. </summary>
         public List<ARGstruct> argList = new List<ARGstruct>();
+        /// <summary>   List of rsps. </summary>
         public List<RSPstruct> rspList = new List<RSPstruct>();
         //private Validation validate = new Validation();
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Registry string builder. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="CT">       The ct. </param>
+        /// <param name="c">        The registryCommands to process. </param>
+        /// <param name="teamName"> Name of the team. </param>
+        /// <param name="teamID">   Identifier for the team. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string RegistryStringBuilder(commandType CT, registryCommands c, string teamName, string teamID)
         {
             return message = string.Format("{0}|{1}|{2}|{3}|", aCommandTypes[(int)CT], aRegistryCommands[(int)c], teamName, teamID);
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Hl string debuilder. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="input">    The input. </param>
+        ///
+        /// <returns>   A commandType. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public commandType HLStringDebuilder(string input)
         {
@@ -506,6 +886,16 @@ namespace SOA_pt
             return returner;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Breaking up string. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="input">    The input. </param>
+        ///
+        /// <returns>   A commandType. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public commandType breakingUpString(string input)
         {
             argList.Clear();
@@ -527,6 +917,14 @@ namespace SOA_pt
             return commandType.SOA;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   So aerror checker. </summary>
+        ///
+        ///  
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string SOAerrorChecker()
         {
             string returner = "";
@@ -545,6 +943,14 @@ namespace SOA_pt
             return returner;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Pu berror checker. </summary>
+        ///
+        ///  
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string PUBerrorChecker()
         {
             string returner = "";
@@ -561,8 +967,14 @@ namespace SOA_pt
             return returner;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   DECONSTRUCTORS. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="inputValues">  The input values. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // DECONSTRUCTORS 
         private void DRCcommand(string[] inputValues)
         {
 
@@ -577,6 +989,15 @@ namespace SOA_pt
             }
 
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   In fcommand. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="inputValues">  The input values. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void INFcommand(string[] inputValues)
         {
 
@@ -587,6 +1008,15 @@ namespace SOA_pt
 
 
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   So acommand. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="inputValues">  The input values. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void SOAcommand(string[] inputValues)
         {
 
@@ -598,6 +1028,15 @@ namespace SOA_pt
 
 
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Sr vcommand. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="inputValues">  The input values. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void SRVcommand(string[] inputValues)
         {
             SRVs.teamName = inputValues[1];
@@ -607,6 +1046,15 @@ namespace SOA_pt
             SRVs.numResponses = inputValues[5];
             SRVs.description = inputValues[6];
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Archive gcommand. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="inputValues">  The input values. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void ARGcommand(string[] inputValues)
         {
             ARGs.argPosition = inputValues[1];
@@ -616,12 +1064,30 @@ namespace SOA_pt
             ARGs.value = inputValues[5];
             argList.Add(ARGs);
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Mc hcommand. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="inputValues">  The input values. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void MCHcommand(string[] inputValues)
         {
 
             MCHs.IP = inputValues[1];
             MCHs.port = inputValues[2];
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   RS pcommand. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="inputValues">  The input values. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void RSPcommand(string[] inputValues)
         {
 
@@ -630,6 +1096,15 @@ namespace SOA_pt
             RSPs.DataType = inputValues[3];
             rspList.Add(RSPs);
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Pu bcommand. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="inputValues">  The input values. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         private void PUBcommand(string[] inputValues)
         {
 
@@ -638,7 +1113,17 @@ namespace SOA_pt
             PUBs.errorMessage = inputValues[3];
         }
 
-        // Command builder
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Command builder. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="builder">  The builder. </param>
+        /// <param name="command">  The command. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string DRCBuilder(DRCstruct builder, registryCommands command)
         {
             string cmd = "";
@@ -646,6 +1131,17 @@ namespace SOA_pt
             Logger.Log(cmd);
             return cmd;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Inf builder. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="builder">  The builder. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string INFBuilder(INFstruct builder)
         {
             string cmd = "";
@@ -653,6 +1149,17 @@ namespace SOA_pt
             Logger.Log(cmd);
             return cmd;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Soa builder. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="builder">  The builder. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string SOABuilder(SOAstruct builder)
         {
             string cmd = "";
@@ -660,6 +1167,17 @@ namespace SOA_pt
             Logger.Log(cmd);
             return cmd;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Server builder. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="builder">  The builder. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string SRVBuilder(SRVstruct builder)
         {
             string cmd = "";
@@ -667,6 +1185,17 @@ namespace SOA_pt
             Logger.Log(cmd);
             return cmd;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Argument builder. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="builder">  The builder. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string ARGBuilder(ARGstruct builder)
         {
             string cmd = "";
@@ -674,6 +1203,17 @@ namespace SOA_pt
             Logger.Log(cmd);
             return cmd;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Mch builder. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="builder">  The builder. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string MCHBuilder(MCHstruct builder)
         {
             string cmd = "";
@@ -681,6 +1221,17 @@ namespace SOA_pt
             Logger.Log(cmd);
             return cmd;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Rsp builder. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="builder">  The builder. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string RSPBuilder(RSPstruct builder)
         {
             string cmd = "";
@@ -688,6 +1239,17 @@ namespace SOA_pt
             Logger.Log(cmd);
             return cmd;
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Pub builder. </summary>
+        ///
+        ///  
+        ///
+        /// <param name="builder">  The builder. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public string PUBBuilder(PUBstruct builder)
         {
             string cmd = "";
